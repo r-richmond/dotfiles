@@ -18,7 +18,20 @@ then
   then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
   fi
+  brew bundle --file="$DOTFILES/homebrew/universal_cli.brewfile"
 
+  # install universal casks on mac
+  if test "$(uname)" = "Darwin"
+  then
+    brew bundle --file="$DOTFILES/homebrew/universal_cask.brewfile"
+
+    echo -n "Install personal casks? (y/n) "
+    read answer
+    if [ "$answer" != "${answer#[Yy]}" ]
+    then
+      brew bundle --file="$DOTFILES/homebrew/personal_cask.brewfile"
+    fi
+  fi
 fi
 
 exit 0
