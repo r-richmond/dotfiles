@@ -2,9 +2,27 @@
 #
 # Run all dotfiles installers.
 
+# Ask for the administrator password upfront
+sudo -v
+
 set -e
 
 cd "$(dirname $0)"/..
 
-# find the installers and run them iteratively
-find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
+# run homebrew first
+sh ./homebrew/install.sh
+
+if test ! "$(uname)" = "Darwin"
+  then
+    echo "Running install.sh except ./macos/*"
+    find . -not -path './macos/*' -not -path './homebrew/*' -name install.sh | while read installer ; do
+      echo " runnning ${installer}"
+      sh -c "${installer}" ;
+      done
+  else
+    echo "Running install.sh including ./macos/*"
+    find . -not -path './homebrew/*' -name install.sh | while read installer ; do
+      echo " runnning ${installer}"
+      sh -c "${installer}" ;
+      done
+fi
