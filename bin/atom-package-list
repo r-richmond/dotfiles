@@ -3,7 +3,7 @@
 # Usage: atom-package-list
 #
 # Lists the currently installed atom packages
-# located at ~/.dotfiles/atom.symlink/packages.txt
+# located at ~/.dotfiles/atom/.atom+packages.txt.symlink
 #
 # You can generate a new list based on currently installed
 # packages via atom-package-backup
