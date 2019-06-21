@@ -18,6 +18,8 @@ then
   then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
   fi
+  # Turn off brew analytics
+  brew analytics off
   brew bundle --file="$DOTFILES/homebrew/universal_cli.brewfile"
 
   # install universal casks on mac
@@ -25,7 +27,10 @@ then
   then
     brew bundle --file="$DOTFILES/homebrew/universal_cask.brewfile"
 
-    echo -n "Install personal casks? (y/n) "
+    # enable dark mode from brew
+    dark-mode on
+
+    echo -n "  Install personal casks? (y/n) "
     read answer
     if [ "$answer" != "${answer#[Yy]}" ]
     then
