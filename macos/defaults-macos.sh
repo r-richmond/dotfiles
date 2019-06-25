@@ -3,7 +3,7 @@
 # ~/.macos — https://mths.be/macos
 # Finding more https://github.com/mathiasbynens/dotfiles/issues/5#issuecomment-4117712
 
-# Run ./set-defaults.sh and you'll be good to go.
+# Run ./defaults-macos.sh and you'll be good to go.
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
@@ -291,22 +291,6 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
 # Disable local Time Machine backups
 #hash tmutil &> /dev/null && sudo tmutil disablelocal
-
-###############################################################################
-# Make links to useful apps                                                   #
-###############################################################################
-
-# Archive Utility
-sudo ln -s "/System/Library/CoreServices/Applications/Archive Utility.app" "/Applications/Utilities/Archive Utility.app"
-
-# Directory Utility
-sudo ln -s "/System/Library/CoreServices/Applications/Directory Utility.app" "/Applications/Utilities/Directory Utility.app"
-
-# Screen Sharing
-sudo ln -s "/System/Library/CoreServices/Applications/Screen Sharing.app" "/Applications/Utilities/Screen Sharing.app"
-
-# Ticket Viewer
-sudo ln -s "/System/Library/CoreServices/Ticket Viewer.app" "/Applications/Utilities/Ticket Viewer.app"
 
 ###############################################################################
 # Kill affected applications                                                  #
