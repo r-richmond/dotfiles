@@ -4,7 +4,7 @@
 
 # cd "$(dirname "$0")/.."
 # DOTFILES_ROOT=$(pwd -P)
-DOTFILES_ROOT=~/.dotfiles/
+DOTFILES_ROOT=~/.dotfiles
 
 set -e
 
@@ -140,6 +140,7 @@ install_dotfiles () {
   do
     dst=$(basename "${src%.*}")
     dst="$HOME/${dst//+//}"
+    link_file "$src" "$dst"
   done
 }
 
