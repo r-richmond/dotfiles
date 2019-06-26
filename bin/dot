@@ -42,7 +42,3 @@ export DOTFILES=$HOME/.dotfiles
 
 echo "› $DOTFILES/script/install"
 $DOTFILES/script/install
-
-# Upgrade homebrew
-echo "› brew update"
-brew update
