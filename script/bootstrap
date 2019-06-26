@@ -143,7 +143,7 @@ install_dotfiles () {
     link_file "$src" "$dst"
   done
   # manual rsync for terminal themes
-  rsync -avh --no-perms ./macos/terminal_themes ~/terminal_themes;
+  rsync -avh --no-perms ./macos/terminal_themes ~/;
 }
 
 setup_gitconfig
