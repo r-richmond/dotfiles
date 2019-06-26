@@ -12,7 +12,15 @@ cd "$(dirname $0)"/..
 
 if test ! "$(uname)" = "Darwin"
   then
-  find . -not -path './macos/*' -name install.sh | while read installer ; do sudo sh -c "${installer}" ; done
+    echo "Running install.sh except ./macos/*"
+    find . -not -path './macos/*' -name install.sh | while read installer ; do
+      echo "${installer}"
+      sh -c "${installer}" ;
+      done
   else
-  find . -name install.sh | while read installer ; do sudo sh -c "${installer}" ; done
+    echo "Running install.sh including ./macos/*"
+    find . -name install.sh | while read installer ; do
+      echo "${installer}"
+      sh -c "${installer}" ;
+      done
 fi
