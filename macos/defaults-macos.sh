@@ -192,7 +192,7 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 
 # Cusomize Dock Apps
 dockutil --no-restart --remove all;
-dockutil --no-restart --add "/Applications/Finder.app";
+# dockutil --no-restart --add "/Applications/Finder.app"; # Added by default
 dockutil --no-restart --add "/Applications/Launchpad.app";
 dockutil --no-restart --add "/Applications/Safari.app";
 dockutil --no-restart --add "/Applications/Google Chrome.app";
