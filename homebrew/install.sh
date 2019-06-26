@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Homebrew Installation
 
@@ -25,7 +25,7 @@ if test "$(uname)" = "Darwin"
 then
   brew bundle --file="$DOTFILES/homebrew/universal_cask.brewfile"
 
-  user " - Install personal casks? (y/n) "
+  echo " - Install personal casks? (y/n) "
   read answer
   if [ "$answer" != "${answer#[Yy]}" ]
   then
