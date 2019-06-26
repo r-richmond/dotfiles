@@ -14,13 +14,13 @@ if test ! "$(uname)" = "Darwin"
   then
     echo "Running install.sh except ./macos/*"
     find . -not -path './macos/*' -name install.sh | while read installer ; do
-      echo "${installer}"
+      echo " runnning ${installer}"
       sh -c "${installer}" ;
       done
   else
     echo "Running install.sh including ./macos/*"
     find . -name install.sh | while read installer ; do
-      echo "${installer}"
+      echo " runnning ${installer}"
       sh -c "${installer}" ;
       done
 fi

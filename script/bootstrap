@@ -142,21 +142,25 @@ install_dotfiles () {
     dst="$HOME/${dst//+//}"
     link_file "$src" "$dst"
   done
+  # manual rsync for terminal themes
+  rsync -avh --no-perms ./macos/terminal_themes ~/terminal_themes;
 }
 
 setup_gitconfig
 install_dotfiles
 
+# Lets run install files
+if source bin/dot | while read -r data; do info "$data"; done
+then
+  success "dependencies installs"
+else
+  fail "error installing dependencies"
+fi
+
 # If we're on a Mac, let's install and setup homebrew.
 if [ "$(uname -s)" == "Darwin" ]
 then
-  info "installing dependencies"
-  if source bin/dot | while read -r data; do info "$data"; done
-  then
-    success "dependencies installed"
-  else
-    fail "error installing dependencies"
-  fi
+  info "Running on mac"
 fi
 
 echo ''
