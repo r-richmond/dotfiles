@@ -14,6 +14,7 @@ brew 'nmap' # port tool
 brew 'npm'
 brew 'pipenv'
 brew 'python' # This is now python 3 :D
+brew 'ripgrep'
 brew 'shellcheck' # https://github.com/koalaman/shellcheck
 brew 'trash'
 brew 'tree'

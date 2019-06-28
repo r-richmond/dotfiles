@@ -3,7 +3,18 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 DEFAULT_USER=$(whoami)
 
-plugins=(brew docker git z)
+plugins=(
+  battery
+  brew
+  docker docker-compose
+  git git-extras
+  history
+  kubectl
+  osx
+  pip pipenv python
+  ripgrep
+  z
+)
 ZSH_THEME="powerline"
 
 source $ZSH/oh-my-zsh.sh
