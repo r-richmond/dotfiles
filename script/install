@@ -9,19 +9,21 @@ set -e
 
 cd "$(dirname $0)"/..
 
+# oh-my-zsh is installed in bootstrap
+
 # run homebrew first
 sh ./homebrew/install.sh
 
 if test ! "$(uname)" = "Darwin"
   then
     echo "Running install.sh except ./macos/*"
-    find . -not -path './macos/*' -not -path './homebrew/*' -name install.sh | while read installer ; do
+    find . -not -path './macos/*' -not -path './homebrew/*' -not -path './oh-my-zsh/*' -name install.sh | while read installer ; do
       echo " runnning ${installer}"
       sh -c "${installer}" ;
       done
   else
     echo "Running install.sh including ./macos/*"
-    find . -not -path './homebrew/*' -name install.sh | while read installer ; do
+    find . -not -path './homebrew/*' -not -path './oh-my-zsh/*' -name install.sh | while read installer ; do
       echo " runnning ${installer}"
       sh -c "${installer}" ;
       done

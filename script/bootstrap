@@ -147,6 +147,7 @@ install_dotfiles () {
 }
 
 setup_gitconfig
+
 install_dotfiles
 
 # Lets run install files
