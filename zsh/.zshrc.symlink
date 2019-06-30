@@ -1,18 +1,8 @@
 # shortcut to this dotfiles path is $DOTFILES
 export DOTFILES=$HOME/.dotfiles
-export ZSH=$HOME/.oh-my-zsh
-
-export JAVA_HOME=$(/usr/libexec/java_home)
-
-ZSH_THEME="powerline"
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
-
-#funcions completion problems when using oh-my-zsh themes
-if [ "$ZSH_THEME" ]; then
-  autoload -U $DOTFILES/functions/*(:t)
-fi
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
@@ -35,23 +25,15 @@ done
 # load everything but the path and completion files
 for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
 do
-  if [ -z "$ZSH_THEME" ]; then
-    case "${$(basename $file)%.*}" in
-      oh-my-zsh);;
-      *) source $file;;
-      esac
-  else
-    case "${$(basename $file)%.*}" in
-      config|prompt|window);;
-      oh-my-zsh) source $file ;;
-      *) source $file ;;
-      esac
-  fi
+  source $file
 done
 
 # initialize autocomplete here, otherwise functions won't be loaded
 autoload -U compinit
 compinit
+
+# load antigen
+source ~/.antigenrc
 
 # load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}

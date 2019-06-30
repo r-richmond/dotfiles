@@ -1,0 +1,28 @@
+source /usr/local/share/antigen/antigen.zsh
+
+# example of long form
+antigen bundle https://github.com/robbyrussell/oh-my-zsh.git plugins/brew
+
+antigen use oh-my-zsh
+
+antigen bundle brew
+antigen bundle git
+antigen bundle git-extras
+
+# python
+antigen bundle pip
+antigen bundle pipenv
+antigen bundle python
+
+antigen bundle ripgrep
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+# Fish-like auto suggestions
+antigen bundle zsh-users/zsh-autosuggestions
+# Extra zsh completions
+antigen bundle zsh-users/zsh-completions
+
+antigen theme robbyrussell
+
+antigen apply

@@ -147,7 +147,6 @@ install_dotfiles () {
 }
 
 setup_gitconfig
-
 install_dotfiles
 
 # Lets run install files
@@ -163,6 +162,10 @@ if [ "$(uname -s)" == "Darwin" ]
 then
   info "Running on mac"
 fi
+
+echo 'changing shell'
+sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
+echo "you are now using $SHELL"
 
 echo ''
 echo '  All installed!'
