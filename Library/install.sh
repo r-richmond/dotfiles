@@ -6,7 +6,7 @@ then
   rsync --exclude "README.md" \
     --exclude ".DS_Store" \
     --exclude "install.sh" \
-    -avh --no-perms "$DOTFILES/Library" ~/Library
+    -avh --no-perms "$DOTFILES"/Library/* ~/Library
 else
   echo 'On Linux not Running Library/install.sh'
 fi
