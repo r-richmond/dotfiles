@@ -148,7 +148,3 @@
 # [help]
 #
 #   autocorrect = 1
-
-[credential]
-
-  helper = osxkeychain
