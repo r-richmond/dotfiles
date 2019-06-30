@@ -165,7 +165,7 @@ fi
 
 echo 'changing shell'
 sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
-echo "you are now using $SHELL"
+echo "All new sessions will use $SHELL"
 
 echo ''
 echo '  All installed!'
