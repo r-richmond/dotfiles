@@ -21,6 +21,3 @@ brew 'trash'
 brew 'tree'
 brew 'unixodbc'
 brew 'zsh'
-
-tap 'homebrew/cask-fonts'
-cask 'homebrew/cask-fonts/font-hack-nerd-font'

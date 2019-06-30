@@ -21,6 +21,10 @@ cask 'qlmarkdown' # QL for .md
 cask 'qlstephen' # QL for plain text files
 cask 'quicklook-csv' # QL for csv
 
+# Fonts
+tap 'homebrew/cask-fonts'
+cask 'homebrew/cask-fonts/font-hack-nerd-font'
+
 #Dupes
 #tap 'homebrew/dupes'
 #brew 'homebrew/dupes/nano' # depreciated but left syntax guide

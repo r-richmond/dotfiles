@@ -296,8 +296,7 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 # Kill affected applications                                                  #
 ###############################################################################
 
-echo "Sleeping for 5 seconds to display any errors"
-sleep 5
+sleep 2
 
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   "Dock" "Finder" "Google Chrome" "Google Chrome Canary" "Mail" "Messages" \
@@ -305,4 +304,4 @@ for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
   "iCal"; do
   killall "${app}" &> /dev/null
 done
-echo "Done. Note that some of these changes require a logout/restart to take effect."
+echo " finished defaults-macos."
