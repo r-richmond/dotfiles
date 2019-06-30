@@ -4,6 +4,9 @@
   # sorting from git-extra breaks with a long alias
   aalias = "!git config --get-regexp 'alias.*' | sed 's/^alias.//' | sed 's/[ ]/ = /';"
 
+  # who am i?
+  whoami = "!git config --global user.name && git config --global user.email"
+
   co = checkout
   promote = !$DOTFILES/bin/git-promote
   wtf = !$DOTFILES/bin/git-wtf

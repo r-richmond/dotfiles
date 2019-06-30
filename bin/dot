@@ -40,5 +40,6 @@ done
 
 export DOTFILES=$HOME/.dotfiles
 
+# Install Software
 echo "› $DOTFILES/script/install"
 $DOTFILES/script/install
