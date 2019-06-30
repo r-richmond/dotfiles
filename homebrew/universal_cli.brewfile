@@ -1,4 +1,5 @@
 brew 'antigen'
+brew 'bat'
 brew 'diff-so-fancy' # https://github.com/so-fancy/diff-so-fancy
 brew 'dockutil'
 brew 'git-extras' # https://github.com/tj/git-extras

@@ -23,7 +23,7 @@ cask 'quicklook-csv' # QL for csv
 
 # Fonts
 tap 'homebrew/cask-fonts'
-cask 'font-hack-nerd-font'
+cask 'font-hack-nerd-font', args: { fontdir: "/Library/Fonts" }
 
 #Dupes
 #tap 'homebrew/dupes'
