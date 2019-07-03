@@ -80,3 +80,6 @@ and I'd love to get it fixed for you!
 I forked [Holman's](http://github.com/holman)' excellent
 [dotfiles](http://github.com/holman/dotfiles) Most of the code in these dotfiles
 stem or are inspired from Holman's original project.
+
+## things to do
+* Improve git compleition [here](https://github.com/agross/dotfiles/commit/4938bc8987a5b4ef0c7411a2c4b988d89a3ade11)
