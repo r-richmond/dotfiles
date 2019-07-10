@@ -6,7 +6,7 @@ cask 'cyberduck' # remote file access
 cask 'dash' # Documentation
 cask 'docker'
 # cask 'github-desktop' # GUI for github
-cask 'google-chrome'
+cask 'firefox'
 cask 'keycastr' # Key casting
 cask 'kitematic' # docker
 cask 'licecap' # Screenrecording software
