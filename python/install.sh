@@ -1,6 +1,7 @@
 #!/bin/sh
 
-pip3 install -q --upgrade --user pip;
-pip3 install -q --upgrade --user setuptools;
-pip3 install -q --user flake8;
-pip3 install -q --user black;
+# avoid --user https://docs.brew.sh/Homebrew-and-Python
+pip3 install -q --upgrade pip;
+pip3 install -q --upgrade setuptools;
+pip3 install -q flake8;
+pip3 install -q black;

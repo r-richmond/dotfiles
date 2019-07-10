@@ -109,7 +109,8 @@ link_file () {
 
     if [ "$backup" == "true" ]
     then
-      mv "$dst" "${dst}.backup"
+      mkdir -p "$home"/backup-dot-files
+      mv "$dst" "$home"/backup-dot-files/"$dst"
       success "moved $dst to ${dst}.backup"
     fi
 
