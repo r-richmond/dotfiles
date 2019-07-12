@@ -1,11 +1,15 @@
 [alias]
-
   # list all aliases https://github.com/tj/git-extras/blob/master/bin/git-alias
   # sorting from git-extra breaks with a long alias
   aalias = "!git config --get-regexp 'alias.*' | sed 's/^alias.//' | sed 's/[ ]/ = /';"
 
+  # additiona list abbreviations http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
+  ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate -n20 # hash/message/author
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat -n5 # shows files changed in each
+  la = log --all --pretty=format:'%C(auto,magenta)% G? %C(yellow)%h %C(auto,red)%>(12,trunc)%ad %Cblue%an%Cgreen%d %Creset%s' --date=relative
+
   # who am i?
-  whoami = "!git config --global user.name && git config --global user.email"
+  whoami = "!git config user.name && git config user.email"
 
   co = checkout
   promote = !$DOTFILES/bin/git-promote
@@ -33,12 +37,10 @@
   fi;"
 
 [apply]
-
   # Detect whitespace errors when applying a patch
   whitespace = fix
 
 [color]
-
   diff = auto
   status = auto
   branch = auto
@@ -47,26 +49,22 @@
   ui = true
 
 [color "branch"]
-
   current = yellow reverse
   local = yellow
   remote = green
 
 [color "diff"]
-
   meta = yellow bold
   frag = magenta bold # line info
   old = red # deletions
   new = green # additions
 
 [color "status"]
-
   added = yellow
   changed = green
   untracked = cyan
 
 [core]
-
   excludesfile = ~/.gitignore
   #attributesfile = ~/.gitattributes
   editor = nano
@@ -93,58 +91,43 @@
   whitespace = space-before-tab,-indent-with-non-tab,trailing-space
 
 [diff]
-
   # Detect copies as well as renames
   renames = copies
 
 [diff "bin"]
-
   # Use `hexdump` to diff binary files
   textconv = hexdump -v -C
 
 [hub]
-
   protocol = https
 
 # Local/private config goes in the include
 [include]
-
   path = ~/.gitconfig.local
 
 [merge]
-
   # Include summaries of merged commits in newly created merge commit messages
   log = true
 
 [pull]
-
   # rebase on pull instead of merge
   rebase = true
 
 [push]
-
   # simple is the default in git 2+ but lets be explicit
   default = simple
   # Make `git push` push relevant annotated tags when pushing branches out.
   followTags = true
 
 [filter "lfs"]
-
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
 
-# imported settings
-
+### imported settings
 [mergetool]
-
   keepBackup = false
 
 [difftool]
-
   prompt = false
-
-# [help]
-#
-#   autocorrect = 1
