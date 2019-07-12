@@ -28,6 +28,9 @@
         "tdload"
         "tbuild"
       ]
+    disabledPackages: [
+      "exception-reporting"
+    ]
     telemetryConsent: "no"
     themes: [
       "one-dark-ui"
