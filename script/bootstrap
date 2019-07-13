@@ -29,7 +29,15 @@ fail () {
 }
 
 setup_gitconfig () {
-  if ! [ -f git/.gitconfig.local.symlink ]
+  local_git_config="$HOME"/dropbox/config/dotfiles/git/.gitconfig.local.symlink
+  if [ -f "$local_git_config" ]; then
+    src=local_git_config
+    dst="$HOME"/.gitconfig.local
+    link_file "$src" "$dst"
+    success "Linked $src to $dst"
+  fi
+
+  if ! [ -f git/.gitconfig.local.symlink ] && ! [ -f ~/.gitconfig.local ]
   then
     info 'setup gitconfig'
 
@@ -162,9 +170,9 @@ then
   info "Running on mac"
 fi
 
-echo 'changing shell'
+info 'changing shell'
 sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
-echo "All new sessions will use $SHELL"
+success "All new sessions will use $SHELL"
 
 echo ''
-echo '  All installed!'
+success '  All installed!'

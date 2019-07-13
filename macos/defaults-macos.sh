@@ -299,7 +299,7 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 sleep 2
 
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
-  "Dock" "Finder" "Google Chrome" "Google Chrome Canary" "Mail" "Messages" \
+  "Dock" "Finder" "Firefox" "Mail" "Messages" \
   "Photos" "Safari" "Spectacle" "SystemUIServer"\
   "iCal"; do
   killall "${app}" &> /dev/null

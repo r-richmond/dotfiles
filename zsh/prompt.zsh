@@ -1,5 +1,9 @@
 # See .antigenrc for powerlevel9k config
 
+# General Guide: https://github.com/bhilburn/powerlevel9k/#context
+# Color Guide: https://github.com/bhilburn/powerlevel9k/wiki/Stylizing-Your-Prompt#special-segment-colors
+# Colors: https://user-images.githubusercontent.com/704406/43988708-64c0fa52-9d4c-11e8-8cf9-c4d4b97a5200.png
+
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='steelblue'
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND='blue'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
