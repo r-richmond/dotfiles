@@ -70,7 +70,7 @@ this script in `bin/`.
 ## bugs
 
 I want this to work for everyone; that means when you clone it down it should
-work for you even though you may not have `rbenv` installed, for example. That
+work for you even though you may not have `something` installed, for example. That
 said, I do use this as _my_ dotfiles, so there's a good chance I may break
 something if I forget to make a check for a dependency.
 
@@ -84,5 +84,27 @@ I forked [Holman's](http://github.com/holman)' excellent
 [dotfiles](http://github.com/holman/dotfiles) Most of the code in these dotfiles
 stem or are inspired from Holman's original project.
 
-## things to do
+## Python troubles post updates
+* Fix Hydrogen
+  * `python3 -m jupyter kernelspec remove python3`
+  * `python3 -m ipykernel install`
+* Fix Virtual envs
+  * `pipenv --rm`
+  * `pipenv sync`
+
+## things left to do
 * Improve git compleition [here](https://github.com/agross/dotfiles/commit/4938bc8987a5b4ef0c7411a2c4b988d89a3ade11)
+* updated keyboard shortcuts
+  * change caps to esc-key - system preferences > keyboard > modifier keys
+  * add notification to option-` - system preferences > keyboard > shortcuts > mission control
+  * change keyboard ctrl-option-cmd-space - system preferences > keyboard > shortcuts > input sources
+* replace siri button with lock button on touchbar
+  * system preferences > keyboard > customize control strip
+* turnoff mission control key settings for ctrl-up/down
+  * system preferences > mission control > mission control, application windows
+* add mouse settings for buttons 4, 5, 3
+  * system preferences > mission control >
+* configure alfred powerpack
+  * setup powerpack & link to sync folder & setup theme
+* Figure out how to safe misc system preferences
+  * keyboard shortcuts defined via macos

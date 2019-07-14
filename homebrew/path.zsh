@@ -1,0 +1,3 @@
+
+# this sets gsed as sed
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
