@@ -1,15 +1,15 @@
 #!/bin/sh
 #
-# Usage: atom-package-list
+# Usage: atom-package-backup
 #
 # Lists the currently installed atom packages
-# located at ~/.dotfiles/atom/.atom+packages.txt.symlink
+# located at ~/.dotfiles/atom/symlink.atom+packages.txt
 #
 # You can generate a new list based on currently installed
 # packages via atom-package-backup
 
 set -e
 
-./atom-package-list > ~/.dotfiles/atom/.atom+packages.txt.symlink
+./atom-package-list > ~/.dotfiles/atom/symlink.atom+packages.txt
 
 # apm list --installed --bare | grep '^[^@]\+' -o
