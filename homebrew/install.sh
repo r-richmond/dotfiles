@@ -26,9 +26,10 @@ then
   brew bundle --file="$DOTFILES/homebrew/universal_cask.brewfile"
 
   echo " - Install personal casks? (y/n) "
-  read answer
+  read -n 1 answer
   if [ "$answer" != "${answer#[Yy]}" ]
   then
+    echo '  Installing personal casks...' # new line
     brew bundle --file="$DOTFILES/homebrew/personal_cask.brewfile"
   fi
 fi

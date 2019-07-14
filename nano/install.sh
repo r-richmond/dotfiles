@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if ! [ -f ~/.nano ]
+if ! [ -d ~/.nano ]
 then
   echo "Cloning fantastic nano syntax repo"
   git clone https://github.com/scopatz/nanorc ~/.nano
