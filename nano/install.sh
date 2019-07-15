@@ -6,4 +6,4 @@ then
   git clone https://github.com/scopatz/nanorc ~/.nano
 fi
 # Manual Updates
-git -C ~/.nano pull
+git -C ~/.nano pull --quiet

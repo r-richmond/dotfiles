@@ -13,10 +13,10 @@ FILE="/Users/$USER/Dropbox/applications/dash/Dash.dashsync";
 # quit dash
 {
   # the following is necessary due to dialog prompt if license is active
-  sleep 1
+  sleep 2
   osascript -e 'tell application "System Events" to key code 36' #return
-  sleep 1
+  sleep 2
   osascript -e 'quit app "DASH"'
 } || {
-  echo "failed to quit das in macos/defaults-dash.sh"
+  echo "failed to quit dash in macos/defaults-dash.sh"
 }
