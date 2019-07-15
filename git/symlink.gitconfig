@@ -68,7 +68,7 @@
   excludesfile = ~/.gitignore
   # attributesfile = ~/.gitattributes
   # editor = nano # something keeps changing this
-  editor = nano
+  editor = /usr/local/bin/atom --wait
 
   # play nice with windows (if windows set to true)
   autocrlf = input
