@@ -44,7 +44,6 @@ There's a few special files in the hierarchy.
   to signify additional directory delimiters. So for example, the file
   `topic/symlink.folder_name+file_name`
   would get symlinked to `$HOME/.folder_name/file_name` when you run `script/bootstrap`.
-  * Additionally I've removed the automatic `.` prefix.
 
 ## install
 
