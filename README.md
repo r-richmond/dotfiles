@@ -93,7 +93,6 @@ stem or are inspired from Holman's original project.
   * `pipenv sync`
 
 ## things left to do
-* Improve git compleition [here](https://github.com/agross/dotfiles/commit/4938bc8987a5b4ef0c7411a2c4b988d89a3ade11)
 * updated keyboard shortcuts
   * change caps to esc-key - system preferences > keyboard > modifier keys
   * add notification to option-` - system preferences > keyboard > shortcuts > mission control
