@@ -14,6 +14,7 @@ brew 'ispell' # spell checker for nano
 brew 'kubectl'
 brew 'lsd'
 brew 'mas' # https://github.com/mas-cli/mas
+brew 'micro'
 brew 'nano'
 brew 'nmap' # port tool
 brew 'npm'
