@@ -33,7 +33,7 @@
     "--select=B,C,E,F,W,T4,B9"
   ],
   "shellcheck.customArgs": ["-e SC1071"],
-  "terminal.integrated.defaultProfile.osx": "/usr/local/bin/zsh",
+  "terminal.integrated.defaultProfile.osx": "zsh",
   "workbench.colorTheme": "An Old Hope Classic",
   "workbench.iconTheme": "vscode-icons",
   "telemetry.enableCrashReporter": false,
@@ -63,5 +63,15 @@
     "yaml": false,
     "plaintext": true,
     "markdown": false
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.guides.bracketPairs": true,
+  "telemetry.telemetryLevel": "off",
+  "editor.renderWhitespace": "none",
+  "workbench.settings.enableNaturalLanguageSearch": false,
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
