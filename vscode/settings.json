@@ -73,5 +73,6 @@
   "workbench.settings.enableNaturalLanguageSearch": false,
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "terminal.integrated.shellIntegration.enabled": false
 }

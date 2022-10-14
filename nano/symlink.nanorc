@@ -1,3 +1,6 @@
+# https://manpages.ubuntu.com/manpages/kinetic/man5/nanorc.5.html
+# Option Guide
+
 # Show line and column numbers in status bar
 set constantshow
 
@@ -23,5 +26,12 @@ include ~/.nano/*.nanorc
 # set spell checker
 set speller "ispell"
 
-# Allow nano to be suspended with ^Z
-set suspend
+# Remove trailing whitespace from wrapped lines when automatic hard-wrapping
+# occurs or when text is justified
+set trimblanks
+
+# Detect word boundaries differently by treating punctuation characters as parts of words.
+set wordbounds
+
+# Do regular-expression searches by default. Regular expressions in nano are of the type (ERE).
+set regexp
