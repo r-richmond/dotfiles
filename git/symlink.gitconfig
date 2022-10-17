@@ -138,5 +138,10 @@
 
 [difftool]
   prompt = false
+
 [init]
 	defaultBranch = main
+
+[submodule]
+  # when pulling update submodules as well
+	recurse = true
