@@ -59,7 +59,7 @@
   "C_Cpp.clang_format_fallbackStyle": "Google",
   "github.copilot.enable": {
     "*": true,
-    "yaml": false,
+    "yaml": true,
     "plaintext": true,
     "markdown": false
   },
@@ -75,5 +75,6 @@
   },
   "terminal.integrated.shellIntegration.enabled": false,
   "workbench.colorTheme": "An Old Hope Classic",
-  "workbench.startupEditor": "none"
+  "workbench.startupEditor": "none",
+  "terminal.explorerKind": "external"
 }
