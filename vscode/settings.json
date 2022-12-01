@@ -77,7 +77,7 @@
   "workbench.colorTheme": "An Old Hope Classic",
   "workbench.startupEditor": "none",
   "terminal.explorerKind": "external",
-  "terminal.integrated.shellIntegration.history": 1000,
+  "terminal.integrated.shellIntegration.history": 10000,
   "terminal.integrated.scrollback": 100000,
   "python.linting.mypyPath": "/usr/local/bin/mypy",
   "python.linting.flake8Path": "/usr/local/bin/flake8"
