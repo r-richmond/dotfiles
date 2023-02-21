@@ -34,7 +34,8 @@
   ],
   "shellcheck.customArgs": ["-e SC1071"],
   "terminal.integrated.defaultProfile.osx": "zsh",
-  "workbench.iconTheme": "vscode-icons",
+  "workbench.colorTheme": "An Old Hope Classic",
+  "workbench.iconTheme": "material-icon-theme",
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "editor.suggestSelection": "first",
@@ -74,7 +75,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "terminal.integrated.shellIntegration.enabled": false,
-  "workbench.colorTheme": "An Old Hope Classic",
+
   "workbench.startupEditor": "none",
   "terminal.explorerKind": "external",
   "terminal.integrated.shellIntegration.history": 10000,
