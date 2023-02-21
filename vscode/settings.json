@@ -80,5 +80,6 @@
   "terminal.integrated.shellIntegration.history": 10000,
   "terminal.integrated.scrollback": 100000,
   "python.linting.mypyPath": "/usr/local/bin/mypy",
-  "python.linting.flake8Path": "/usr/local/bin/flake8"
+  "python.linting.flake8Path": "/usr/local/bin/flake8",
+  "python.interpreter.infoVisibility": "always"
 }
