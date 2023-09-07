@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/opt/homebrew/bin/zsh
 
 source $DOTFILES/functions/replace-new-lines-with-spaces
 

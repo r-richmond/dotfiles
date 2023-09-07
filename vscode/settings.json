@@ -79,12 +79,9 @@
   "terminal.explorerKind": "external",
   "terminal.integrated.shellIntegration.history": 10000,
   "terminal.integrated.scrollback": 100000,
-  "python.linting.mypyPath": "/usr/local/bin/mypy",
-  "python.linting.flake8Path": "/usr/local/bin/flake8",
   "python.interpreter.infoVisibility": "always",
   "python.formatting.blackPath": "~/.local/bin/black",
   "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "editor.codeLensFontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
-  "window.zoomLevel": -1,
   "diffEditor.experimental.useVersion2": true
 }

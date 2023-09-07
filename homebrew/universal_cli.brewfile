@@ -1,6 +1,5 @@
 brew 'bat'
 brew 'diff-so-fancy' # https://github.com/so-fancy/diff-so-fancy
-brew 'dockutil'
 brew 'fd' # find alternative
 brew 'git'
 brew 'gitmoji'
@@ -19,15 +18,13 @@ brew 'micro'
 brew 'nano'
 brew 'nmap' # port tool
 brew 'npm'
-brew 'openjdk' # java
+# brew 'openjdk' # java
 brew 'python' # This is now python 3 :D
 brew 'pipx'
 brew 'ripgrep'
 brew 'shellcheck' # https://github.com/koalaman/shellcheck
-brew 'todo-txt'
 brew 'trash'
 brew 'tree'
-brew 'unixodbc'
 brew 'zsh'
 
 # Note: zsh completition scripts installed here
