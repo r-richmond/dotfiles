@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/opt/homebrew/bin/zsh
 
 # replaces new lines with spaces in a file
 function replace-new-lines-with-spaces() {

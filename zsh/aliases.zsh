@@ -9,6 +9,8 @@ alias cls='clear' # Good 'ol Clear Screen command
 ### General
 alias cat-old='/bin/cat '
 alias cat='bat '
+alias h='history 1'
+alias ht='history -i 1'
 
 # Enable aliases to be sudo’ed
 alias sudo='sudo '

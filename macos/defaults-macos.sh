@@ -193,35 +193,8 @@ defaults write com.apple.dock wvous-tr-modifier -int 0
 defaults write com.apple.dock wvous-bl-corner -int 0 # was 5
 defaults write com.apple.dock wvous-bl-modifier -int 0
 
-# this is broken now
-# # Cusomize Dock Apps
-# dockutil --no-restart --remove all;
-# # dockutil --no-restart --add "/Applications/Finder.app"; # Added by default
-# dockutil --no-restart --add "/Applications/Launchpad.app";
-# dockutil --no-restart --add "/Applications/Safari.app";
-# dockutil --no-restart --add "/Applications/Firefox.app";
-# dockutil --no-restart --add "/Applications/Mail.app";
-# dockutil --no-restart --add "/Applications/Contacts.app";
-# dockutil --no-restart --add "/Applications/Calendar.app";
-# dockutil --no-restart --add "/Applications/Notes.app";
-# dockutil --no-restart --add "/Applications/Messages.app";
-# dockutil --no-restart --add "/Applications/Facetime.app";
-# dockutil --no-restart --add "/Applications/Maps.app";
-# dockutil --no-restart --add "/Applications/Photos.app";
-# dockutil --no-restart --add "/Applications/Itunes.app";
-# dockutil --no-restart --add "/Applications/News.app";
-# dockutil --no-restart --add "/Applications/Stocks.app";
-# dockutil --no-restart --add "/Applications/Home.app";
-# dockutil --no-restart --add "/Applications/App Store.app";
-# dockutil --no-restart --add "/Applications/Utilities/Terminal.app";
-# dockutil --no-restart --add "/Applications/System Preferences.app";
-# dockutil --no-restart --add "/Applications/Utilities/Console.app";
-# dockutil --no-restart --add "/Applications/Visual Studio Code.app";
-
 # add a recent item stack
 defaults write com.apple.dock persistent-others -array-add '{"tile-data" = {"list-type" = 1;}; "tile-type" = "recents-tile";}'
-dockutil --remove Downloads
-dockutil --add ~/Downloads/ --view grid --display stack
 
 ###############################################################################
 # Date & Time                                                                 #

@@ -75,7 +75,7 @@
   excludesfile = ~/.gitignore
   # attributesfile = ~/.gitattributes
   # something keeps changing this
-  editor = /usr/local/bin/nano
+  editor = /opt/homebrew/bin/nano
   # editor = /usr/local/bin/code --wait
 
   # play nice with windows (if windows set to true)
@@ -138,5 +138,10 @@
 
 [difftool]
   prompt = false
+
 [init]
 	defaultBranch = main
+
+[submodule]
+  # when pulling update submodules as well
+	recurse = true

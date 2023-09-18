@@ -2,7 +2,6 @@
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
-  "editor.fontFamily": "'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "files.insertFinalNewline": true,
@@ -33,7 +32,7 @@
     "--select=B,C,E,F,W,T4,B9"
   ],
   "shellcheck.customArgs": ["-e SC1071"],
-  "terminal.integrated.defaultProfile.osx": "/usr/local/bin/zsh",
+  "terminal.integrated.defaultProfile.osx": "zsh",
   "workbench.colorTheme": "An Old Hope Classic",
   "workbench.iconTheme": "material-icon-theme",
   "telemetry.enableCrashReporter": false,
@@ -64,8 +63,25 @@
     "plaintext": true,
     "markdown": false
   },
-  "terminal.explorerKind": "external",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.guides.bracketPairs": true,
+  "telemetry.telemetryLevel": "off",
+  "editor.renderWhitespace": "none",
+  "workbench.settings.enableNaturalLanguageSearch": false,
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "terminal.integrated.shellIntegration.enabled": false,
+
+  "workbench.startupEditor": "none",
+  "terminal.explorerKind": "external",
+  "terminal.integrated.shellIntegration.history": 10000,
+  "terminal.integrated.scrollback": 100000,
+  "python.interpreter.infoVisibility": "always",
+  "python.formatting.blackPath": "~/.local/bin/black",
+  "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+  "editor.codeLensFontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+  "diffEditor.experimental.useVersion2": true
 }

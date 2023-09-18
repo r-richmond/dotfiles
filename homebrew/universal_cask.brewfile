@@ -1,6 +1,6 @@
 cask 'alfred'
 cask 'cyberduck' # remote file access
-cask 'dash' # Documentation
+# cask 'dash' # Documentation
 cask 'firefox'
 cask 'google-cloud-sdk' # google cli
 cask 'keycastr' # Key casting
@@ -10,7 +10,7 @@ cask 'visual-studio-code' # Text Editor
 
 # Not in Application Folder
 cask 'qlmarkdown' # QL for .md
-cast 'syntax-highlight' # Syntax highlighting
+cask 'syntax-highlight' # Syntax highlighting
 
 # Fonts
 tap 'homebrew/cask-fonts'

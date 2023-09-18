@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/opt/homebrew/bin/zsh
 #
 # useful for converting .plist files
 #
