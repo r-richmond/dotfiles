@@ -67,5 +67,6 @@
   "terminal.explorerKind": "external",
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.inlineSuggest.enabled": true
 }
