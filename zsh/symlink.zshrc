@@ -53,7 +53,7 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 
 # Personal Zsh configuration file. It is strongly recommended to keep all
 # shell customization and configuration (including exported environment
-# variables such as PATH) in this file or in files source by it.
+# variables such as PATH) in this file or in files sourced from it.
 #
 # Documentation: https://github.com/romkatv/zsh4humans/blob/v5/README.md.
 
@@ -63,14 +63,14 @@ zstyle ':z4h:' auto-update      'no'
 # Ask whether to auto-update this often; has no effect if auto-update is 'no'.
 zstyle ':z4h:' auto-update-days '28'
 
-# Start tmux if not already in tmux.
-zstyle ':z4h:' start-tmux       command tmux -u new -A -D -t z4h
-
-# Move prompt to the bottom when zsh starts and on Ctrl+L.
-zstyle ':z4h:' prompt-at-bottom 'yes'
-
 # Keyboard type: 'mac' or 'pc'.
 zstyle ':z4h:bindkey' keyboard  'mac'
+
+# Don't start tmux.
+zstyle ':z4h:' start-tmux       no
+
+# Mark up shell's output with semantic information.
+zstyle ':z4h:' term-shell-integration 'yes'
 
 # Right-arrow key accepts one character ('partial-accept') from
 # command autosuggestions or the whole thing ('accept')?
@@ -80,18 +80,18 @@ zstyle ':z4h:autosuggestions' forward-char 'accept'
 zstyle ':z4h:fzf-complete' recurse-dirs 'yes'
 
 # Enable direnv to automatically source .envrc files.
-zstyle ':z4h:direnv'         enable 'no'
+zstyle ':z4h:direnv'         enable 'yes'
 # Show "loading" and "unloading" notifications from direnv.
 zstyle ':z4h:direnv:success' notify 'yes'
 
 # Enable ('yes') or disable ('no') automatic teleportation of z4h over
-# ssh when connecting to these hosts.
+# SSH when connecting to these hosts.
 zstyle ':z4h:ssh:example-hostname1'   enable 'yes'
 zstyle ':z4h:ssh:*.example-hostname2' enable 'no'
 # The default value if none of the overrides above match the hostname.
 zstyle ':z4h:ssh:*'                   enable 'no'
 
-# Send these files over to the remote host when connecting over ssh to the
+# Send these files over to the remote host when connecting over SSH to the
 # enabled hosts.
 zstyle ':z4h:ssh:*' send-extra-files '~/.nanorc' '~/.env.zsh'
 
@@ -114,6 +114,9 @@ path=(~/bin $path)
 # Export environment variables.
 export GPG_TTY=$TTY
 
+# Source additional local files if they exist.
+z4h source ~/.env.zsh
+
 # Use additional Git repositories pulled in with `z4h install`.
 #
 # This is just an example that you should delete. It does nothing useful.
@@ -121,8 +124,8 @@ z4h source ohmyzsh/ohmyzsh/lib/diagnostics.zsh  # source an individual file
 z4h load   ohmyzsh/ohmyzsh/plugins/emoji-clock  # load a plugin
 
 # Define key bindings.
-z4h bindkey undo Ctrl+/  # undo the last command line change
-z4h bindkey redo Alt+/   # redo the last undone command line change
+z4h bindkey undo Ctrl+/   Shift+Tab  # undo the last command line change
+z4h bindkey redo Option+/            # redo the last undone command line change
 
 z4h bindkey z4h-cd-back    Shift+Left   # cd into the previous directory
 z4h bindkey z4h-cd-forward Shift+Right  # cd into the next directory
@@ -138,6 +141,9 @@ compdef _directories md
 
 # Define named directories: ~w <=> Windows home directory on WSL.
 [[ -z $z4h_win_home ]] || hash -d w=$z4h_win_home
+
+# Define aliases.
+alias tree='tree -a -I .git'
 
 # Add flags to existing aliases.
 alias ls="${aliases[ls]:-ls} -A"

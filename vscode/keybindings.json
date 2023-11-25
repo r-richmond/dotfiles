@@ -52,5 +52,15 @@
   {
     "key": "cmd+k m",
     "command": "-workbench.action.editor.changeLanguageMode"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "editor.action.sourceAction",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-editor.action.sourceAction",
+    "when": "editorTextFocus"
   }
 ]

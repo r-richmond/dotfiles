@@ -191,7 +191,7 @@ if [ "$(uname -s)" == "Darwin" ]; then
 fi
 
 info 'changing shell'
-sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
+sudo dscl . -create /Users/$USER UserShell /opt/homebrew/bin/zsh
 success "All new sessions will use $SHELL"
 
 echo ''
