@@ -5,7 +5,6 @@ ThingsToSource=( # Some zsh completiton scripts that may or may not exist
 
 for file in "${ThingsToSource[@]}"; do
   if [[ -f "$file" ]]; then
-    echo "Sourcing $file"
     source "$file"
   fi
 done

@@ -153,7 +153,6 @@ setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 ThingsToSource=( # Some zsh completiton scripts that may or may not exist
-  "/Users/$USER/.docker/init-zsh.sh" # Added by Docker Desktop
   "/Users/$USER/PycharmProjects/airflow/dev/breeze/autocomplete/breeze-complete-zsh.sh" # added by Updated Airflow Breeze autocomplete setup
 )
 
