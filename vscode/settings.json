@@ -73,8 +73,8 @@
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "editor.inlineSuggest.enabled": true,
   "terminal.integrated.shellIntegration.enabled": false,
-
   "workbench.startupEditor": "none",
   "terminal.explorerKind": "external",
   "terminal.integrated.shellIntegration.history": 10000,

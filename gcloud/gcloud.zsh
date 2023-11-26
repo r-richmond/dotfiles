@@ -1,6 +1,10 @@
-if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc' ]; then
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-fi
-if [ -f '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then
-  source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
-fi
+ThingsToSource=( # Some zsh completiton scripts that may or may not exist
+  "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"       # installed by brew cask install google-cloud-sdk
+  "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc" # installed by brew cask install google-cloud-sdk
+)
+
+for file in "${ThingsToSource[@]}"; do
+  if [[ -f "$file" ]]; then
+    source "$file"
+  fi
+done
