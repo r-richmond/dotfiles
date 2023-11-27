@@ -1,3 +1,5 @@
+export PATH="/opt/homebrew/bin:$PATH"
+
 # this makes core utls available in path
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 
