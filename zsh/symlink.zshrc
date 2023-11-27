@@ -92,5 +92,7 @@ compdef _directories md
 
 # brew install zsh-syntax-highlighting
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# brew install zsh-autosuggestions
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source ~/.fzf.zsh
