@@ -25,7 +25,7 @@ done 2>/dev/null &
 
 # Example: Use Googles DNS as default DNS
 # sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4
-sudo networksetup -setdnsservers Wi-Fi 2001:4860:4860::8888 2001:4860:4860::8844
+# sudo networksetup -setdnsservers Wi-Fi 2001:4860:4860::8888 2001:4860:4860::8844
 
 ###############################################################################
 # General UI/UX                                                               #
