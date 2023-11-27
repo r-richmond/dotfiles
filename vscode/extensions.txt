@@ -1,4 +1,5 @@
 bierner.markdown-mermaid
+charliermarsh.ruff
 christian-kohler.path-intellisense
 DavidAnson.vscode-markdownlint
 deerawan.vscode-dash
@@ -8,18 +9,18 @@ earshinov.permute-lines
 esbenp.prettier-vscode
 foxundermoon.shell-format
 GitHub.copilot
+GitHub.copilot-chat
 hashicorp.terraform
-johnpapa.vscode-peacock
 k--kato.intellij-idea-keybindings
 mikestead.dotenv
 ms-azuretools.vscode-docker
-ms-python.isort
 ms-python.python
 ms-python.vscode-pylance
 ms-vscode-remote.remote-containers
 ms-vscode-remote.remote-ssh
 ms-vscode-remote.remote-ssh-edit
 ms-vscode-remote.vscode-remote-extensionpack
+ms-vscode.makefile-tools
 ms-vscode.remote-explorer
 ms-vscode.remote-server
 ms-vsliveshare.vsliveshare

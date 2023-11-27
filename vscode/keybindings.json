@@ -62,5 +62,10 @@
     "key": "cmd+n",
     "command": "-editor.action.sourceAction",
     "when": "editorTextFocus"
+  },
+  {
+    "key": "cmd+n",
+    "command": "-editor.action.sourceAction",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
   }
 ]

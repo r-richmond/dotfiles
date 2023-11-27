@@ -17,20 +17,27 @@
   "gitlens.hovers.enabled": false,
   "gitlens.statusBar.dateFormat": "YYYY-MM-DD",
   "path-intellisense.showHiddenFiles": true,
-  "prettier.printWidth": 88,
-  "python.linting.flake8Enabled": true,
+  "prettier.printWidth": 120,
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "python.defaultInterpreterPath": "python3",
+  "python.testing.unittestEnabled": true,
   "python.pythonPath": "python3",
-  "python.formatting.provider": "black",
   "python.languageServer": "Pylance",
   "python.linting.mypyEnabled": true,
   "python.experiments.enabled": false,
   "python.jediEnabled": false,
-  "python.linting.flake8Args": [
-    "--ignore=E203,E266,E501,W503,F403,F401",
-    "--max-line-length=89",
-    "--max-complexity=18",
-    "--select=B,C,E,F,W,T4,B9"
-  ],
+  "python.interpreter.infoVisibility": "always",
+  "python.analysis.memory.keepLibraryAst": true,
+  "python.analysis.memory.keepLibraryLocalVariables": true,
+  "ruff.interpreter": ["python3"],
+  "ruff.path": ["~/.local/bin/ruff"],
   "shellcheck.customArgs": ["-e SC1071"],
   "terminal.integrated.defaultProfile.osx": "zsh",
   "workbench.colorTheme": "An Old Hope Classic",
@@ -40,20 +47,12 @@
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "sqltools.highlightQuery": false,
-  "python.sortImports.path": "isort",
-  "python.analysis.memory.keepLibraryAst": true,
-  "python.analysis.memory.keepLibraryLocalVariables": true,
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook"
   },
   "github.gitAuthentication": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "peacock.vslsShareColor": "#dd0531",
-  "notebook.cellToolbarLocation": {
-    "default": "right",
-    "jupyter-notebook": "left"
   },
   "gitlens.codeLens.enabled": false,
   "C_Cpp.clang_format_fallbackStyle": "Google",
@@ -79,9 +78,7 @@
   "terminal.explorerKind": "external",
   "terminal.integrated.shellIntegration.history": 10000,
   "terminal.integrated.scrollback": 100000,
-  "python.interpreter.infoVisibility": "always",
-  "python.formatting.blackPath": "~/.local/bin/black",
-  "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "'MesloLGS NF', 'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "editor.codeLensFontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "diffEditor.experimental.useVersion2": true
 }
