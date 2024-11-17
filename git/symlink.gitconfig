@@ -145,3 +145,5 @@
 [submodule]
   # when pulling update submodules as well
 	recurse = true
+[credential]
+	helper = osxkeychain
