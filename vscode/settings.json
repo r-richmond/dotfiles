@@ -21,8 +21,8 @@
   "[python]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": true,
-      "source.organizeImports": true
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
     },
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
@@ -30,12 +30,9 @@
   "python.testing.unittestEnabled": true,
   "python.pythonPath": "python3",
   "python.languageServer": "Pylance",
-  "python.linting.mypyEnabled": true,
   "python.experiments.enabled": false,
   "python.jediEnabled": false,
   "python.interpreter.infoVisibility": "always",
-  "python.analysis.memory.keepLibraryAst": true,
-  "python.analysis.memory.keepLibraryLocalVariables": true,
   "ruff.interpreter": ["python3"],
   "ruff.path": ["~/.local/bin/ruff"],
   "shellcheck.customArgs": ["-e SC1071"],
@@ -80,5 +77,6 @@
   "terminal.integrated.scrollback": 100000,
   "editor.fontFamily": "'MesloLGS NF', 'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "editor.codeLensFontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
-  "diffEditor.experimental.useVersion2": true
+  "diffEditor.experimental.useVersion2": true,
+  "github.copilot.editor.enableAutoCompletions": true
 }
