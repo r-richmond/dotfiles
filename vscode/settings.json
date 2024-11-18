@@ -7,8 +7,8 @@
   "files.insertFinalNewline": true,
   "files.associations": {
     "*.json": "jsonc",
-    // this looks best
-    "*.brewfile": "pip-requirements"
+    "*.brewfile": "pip-requirements",
+    "*.yaml.template": "yaml"
   },
   "gitlens.blame.dateFormat": "YYYY-MM-DD",
   "gitlens.currentLine.dateFormat": "YYYY-MM-DD",
@@ -21,17 +21,15 @@
   "[python]": {
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": "explicit",
-      "source.organizeImports": "explicit"
+      "source.fixAll": true,
+      "source.organizeImports": true
     },
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "python.defaultInterpreterPath": "python3",
   "python.testing.unittestEnabled": true,
-  "python.pythonPath": "python3",
   "python.languageServer": "Pylance",
   "python.experiments.enabled": false,
-  "python.jediEnabled": false,
   "python.interpreter.infoVisibility": "always",
   "ruff.interpreter": ["python3"],
   "ruff.path": ["~/.local/bin/ruff"],
@@ -43,7 +41,6 @@
   "telemetry.enableTelemetry": false,
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  "sqltools.highlightQuery": false,
   "workbench.editorAssociations": {
     "*.ipynb": "jupyter-notebook"
   },
@@ -52,12 +49,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "gitlens.codeLens.enabled": false,
-  "C_Cpp.clang_format_fallbackStyle": "Google",
   "github.copilot.enable": {
     "*": true,
-    "yaml": true,
     "plaintext": true,
-    "markdown": false
+    "markdown": true,
+    "scminput": false,
+    "yaml": true
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -77,6 +74,15 @@
   "terminal.integrated.scrollback": 100000,
   "editor.fontFamily": "'MesloLGS NF', 'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "editor.codeLensFontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
-  "diffEditor.experimental.useVersion2": true,
-  "github.copilot.editor.enableAutoCompletions": true
+  "github.copilot.editor.enableAutoCompletions": true,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "github.copilot.chat.welcomeMessage": "always",
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "diffEditor.ignoreTrimWhitespace": false
+  }
 }
