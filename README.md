@@ -83,15 +83,6 @@ I forked [Holman's](http://github.com/holman)' excellent
 [dotfiles](http://github.com/holman/dotfiles) Most of the code in these dotfiles
 stem or are inspired from Holman's original project.
 
-## Python troubles post updates
-
-- Fix Hydrogen
-  - `python3 -m jupyter kernelspec remove python3`
-  - `python3 -m ipykernel install`
-- Fix Virtual envs
-  - `pipenv --rm`
-  - `pipenv sync`
-
 ## things left to do
 
 - updated keyboard shortcuts

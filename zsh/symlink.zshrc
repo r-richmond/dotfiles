@@ -99,4 +99,6 @@ source ~/.fzf.zsh
 
 # auto complete azure-cli
 autoload bashcompinit && bashcompinit
-source $(brew --prefix)/etc/bash_completion.d/az
+if [ -f "$(brew --prefix)/etc/bash_completion.d/az" ]; then
+  source $(brew --prefix)/etc/bash_completion.d/az
+fi

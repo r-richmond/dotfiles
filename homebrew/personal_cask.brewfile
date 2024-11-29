@@ -1,8 +1,3 @@
 # Application Folder
-cask '1password'
+cask '1password@7'
 cask 'discord'
-
-# Mac App Store
-# mas 'CodeBox', id: 412536790
-mas 'MacFamilyTree 7', id: 572280828
-mas 'Dark Mode for Safari', id: 1397180934
