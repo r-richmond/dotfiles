@@ -6,26 +6,24 @@ brew 'git'
 brew 'git-extras' # https://github.com/tj/git-extras
 brew 'git-lfs'
 brew 'git-open' # https://github.com/jeffreyiacono/git-open
-brew 'gitmoji'
 brew 'gnu-sed'
 brew 'grep'
 brew 'helm'
 brew 'hugo' # https://gohugo.io
 brew 'ispell' # spell checker for nano
 brew 'lsd'
-brew 'mas' # https://github.com/mas-cli/mas
 brew 'nano'
 brew 'nmap' # port tool
 brew 'npm'
 brew 'numbat' # https://github.com/sharkdp/numbat
 # brew 'openjdk' # java
-brew 'pipx'
 brew 'powerlevel10k'
 brew 'python' # This is now python 3 :D
 brew 'ripgrep'
 brew 'shellcheck' # https://github.com/koalaman/shellcheck
 brew 'trash'
 brew 'tree'
+brew 'uv'
 brew 'zsh'
 brew 'zsh-autosuggestions'
 brew 'zsh-completions'
