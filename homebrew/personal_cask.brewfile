@@ -1,3 +1,5 @@
 # Application Folder
 cask '1password@7'
 cask 'discord'
+cask 'little-snitch'
+cask 'lm-studio'

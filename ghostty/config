@@ -1,0 +1,4 @@
+background-opacity = 0.90
+background-blur-radius = 1
+theme = Dracula+
+quit-after-last-window-closed = true
