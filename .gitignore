@@ -2,3 +2,6 @@ git/symlink.gitconfig.local
 macos/defaults-macos-personal.sh
 zsh/p10k.zsh.zwc
 nushell/history.txt
+# added by github-copilot
+github-copilot
+k9s/screen-dumps

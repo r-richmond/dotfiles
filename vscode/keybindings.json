@@ -91,5 +91,15 @@
   {
     "key": "cmd+numpad_subtract",
     "command": "-workbench.action.zoomOut"
+  },
+  {
+    "key": "ctrl+alt+b",
+    "command": "gitlens.toggleFileBlame",
+    "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && resource in 'gitlens:tabs:blameable'"
+  },
+  {
+    "key": "alt+b",
+    "command": "-gitlens.toggleFileBlame",
+    "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && resource in 'gitlens:tabs:blameable'"
   }
 ]
