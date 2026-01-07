@@ -100,10 +100,19 @@
 [diff]
   # Detect copies as well as renames
   renames = copies
+  algorithm = histogram
+  mnemonicPrefix = true
 
 [diff "bin"]
   # Use `hexdump` to diff binary files
   textconv = hexdump -v -C
+
+[fetch]
+  # Really all that this does is make sure we delete origin/blah if blah is deleted on the server, and also do it automatically for all the remotes that we have configured. Seems pretty reasonable to me.
+  # https://blog.gitbutler.com/how-git-core-devs-configure-git#better-fetching
+  prune = true
+  pruneTags = true
+  all = true
 
 [hub]
   protocol = https
@@ -125,6 +134,8 @@
   default = simple
   # Make `git push` push relevant annotated tags when pushing branches out.
   followTags = true
+  #  If the upstream is not set, it will automatically set it.
+  autoSetupRemote = true
 
 [filter "lfs"]
   clean = git-lfs clean -- %f
@@ -145,3 +156,5 @@
 [submodule]
   # when pulling update submodules as well
 	recurse = true
+[safe]
+	directory = *
