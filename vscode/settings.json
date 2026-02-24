@@ -1,6 +1,6 @@
 {
   "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers",
   },
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
@@ -8,7 +8,7 @@
   "files.associations": {
     "*.json": "jsonc",
     "*.brewfile": "pip-requirements",
-    "*.yaml.template": "yaml"
+    "*.yaml.template": "yaml",
   },
   "gitlens.blame.dateFormat": "YYYY-MM-DD",
   "gitlens.currentLine.dateFormat": "YYYY-MM-DD",
@@ -22,9 +22,9 @@
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": "explicit",
-      "source.organizeImports": "explicit"
+      "source.organizeImports": "explicit",
     },
-    "editor.defaultFormatter": "charliermarsh.ruff"
+    "editor.defaultFormatter": "charliermarsh.ruff",
   },
   "python.defaultInterpreterPath": "python3",
   "python.testing.unittestEnabled": true,
@@ -42,11 +42,11 @@
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "workbench.editorAssociations": {
-    "*.ipynb": "jupyter-notebook"
+    "*.ipynb": "jupyter-notebook",
   },
   "github.gitAuthentication": false,
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "gitlens.codeLens.enabled": false,
   "github.copilot.enable": {
@@ -54,20 +54,20 @@
     "plaintext": true,
     "markdown": true,
     "scminput": false,
-    "yaml": true
+    "yaml": true,
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "editor.guides.bracketPairs": true,
   "telemetry.telemetryLevel": "off",
   "editor.renderWhitespace": "none",
   "workbench.settings.enableNaturalLanguageSearch": false,
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "editor.inlineSuggest.enabled": true,
-  "terminal.integrated.shellIntegration.enabled": false,
+  "terminal.integrated.shellIntegration.enabled": true,
   "workbench.startupEditor": "none",
   "terminal.explorerKind": "external",
   "terminal.integrated.shellIntegration.history": 10000,
@@ -76,14 +76,14 @@
   "editor.codeLensFontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "github.copilot.editor.enableAutoCompletions": true,
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "github.copilot.chat.welcomeMessage": "always",
   "[yaml]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
     "editor.autoIndent": "advanced",
-    "diffEditor.ignoreTrimWhitespace": false
+    "diffEditor.ignoreTrimWhitespace": false,
   },
   "chat.agent.enabled": true,
   "git.blame.editorDecoration.enabled": true,
@@ -98,12 +98,12 @@
     "editor.quickSuggestions": {
       "other": true,
       "comments": false,
-      "strings": true
+      "strings": true,
     },
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "[github-actions-workflow]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "gitlens.ai.model": "vscode",
   "gitlens.ai.vscode.model": "copilot:gpt-4.1",
@@ -118,6 +118,10 @@
     "fileHistory": false,
     "repositories": true,
     "searchAndCompare": true,
-    "launchpad": false
-  }
+    "launchpad": false,
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "chat.viewSessions.orientation": "stacked",
+  "chat.agent.maxRequests": 125,
+  "chat.mcp.gallery.enabled": true,
 }
