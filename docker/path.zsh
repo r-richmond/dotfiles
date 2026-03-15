@@ -1,9 +1,8 @@
-ThingsToSource=( # Some zsh completiton scripts that may or may not exist
-  "/Users/$USER/.docker/init-zsh.sh" # Added by Docker Desktop
-)
+if [ -d "$HOME/.docker/completions" ]; then
+  # The following lines have been added by Docker Desktop to enable Docker CLI completions.
+  fpath=($HOME/.docker/completions $fpath)
+  autoload -Uz compinit
+  compinit
+  # End of Docker CLI completions
+fi
 
-for file in "${ThingsToSource[@]}"; do
-  if [[ -f "$file" ]]; then
-    source "$file"
-  fi
-done
