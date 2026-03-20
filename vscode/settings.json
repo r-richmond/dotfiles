@@ -31,9 +31,15 @@
   "python.languageServer": "Pylance",
   "python.experiments.enabled": false,
   "python.interpreter.infoVisibility": "always",
-  "ruff.interpreter": ["python3"],
-  "ruff.path": ["~/.local/bin/ruff"],
-  "shellcheck.customArgs": ["-e SC1071"],
+  "ruff.interpreter": [
+    "python3"
+  ],
+  "ruff.path": [
+    "~/.local/bin/ruff"
+  ],
+  "shellcheck.customArgs": [
+    "-e SC1071"
+  ],
   "terminal.integrated.defaultProfile.osx": "zsh",
   "workbench.colorTheme": "An Old Hope Classic",
   "workbench.iconTheme": "material-icon-theme",
