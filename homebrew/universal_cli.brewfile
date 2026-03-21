@@ -2,6 +2,7 @@ brew 'bat'
 brew 'diff-so-fancy' # https://github.com/so-fancy/diff-so-fancy
 brew 'fd' # find alternative
 brew 'fzf'
+brew 'gh' # GitHub CLI
 brew 'git'
 brew 'git-extras' # https://github.com/tj/git-extras
 brew 'git-lfs'
