@@ -13,9 +13,9 @@ forked dotfiles — say, "Java" — you can simply add a `java` directory and pu
 files in there. Anything with an extension of `.zsh` will get automatically
 included into your shell. Anything with a prefix of `symlink` will get
 symlinked without the prefix into `$HOME` when you run `script/bootstrap`.
-Note this is differs from holman so that the extension remains unchanged which
-helps with syntax highlighting. Additionally, + signs in the name are used
-to indicate directories.
+This differs from Holman's layout so the file extension stays unchanged, which
+helps with syntax highlighting. A `+` in the filename maps to a `/` in the
+destination path under `$HOME`.
 
 ## what's inside
 
@@ -37,13 +37,23 @@ There's a few special files in the hierarchy.
 - **topic/completion.zsh**: Any file named `completion.zsh` is loaded
   last and is expected to setup autocomplete.
 - **topic/install.sh**: Any file named `install.sh` is executed when you run `script/install`. To avoid being loaded automatically, its extension is `.sh`, not `.zsh`.
-- **topic/symlink**: Any file starting with `symlink` gets symlinked into
+- **topic/symlink\***: Any file starting with `symlink` gets symlinked into
   your `$HOME`. This is so you can keep all of those versioned in your dotfiles
   but still keep those autoloaded files in your home directory.
   - To further nest symlinks into subdirectories under `$HOME`, use `+` signs
     to signify additional directory delimiters. So for example, the file
     `topic/symlink.folder_name+file_name`
     would get symlinked to `$HOME/.folder_name/file_name` when you run `script/bootstrap`.
+
+## symlink example
+
+This repo uses the source filename to determine the destination path.
+
+- `zsh/symlink.zshrc` becomes `~/.zshrc`
+- `vscode/symlink.vscode+argv.json` becomes `~/.vscode/argv.json`
+
+Run `script/bootstrap` to create the managed symlinks, and run
+`script/test-symlink` to verify that they still point to the expected files.
 
 ## install
 
@@ -64,10 +74,9 @@ files, run `script/test-symlink`.
 The main file you'll want to change right off the bat is `zsh/symlink.zshrc`,
 which sets up a few paths that'll be different on your particular machine.
 
-`dot` is a simple script that installs some dependencies, sets sane macOS
-defaults, and so on. Tweak this script, and occasionally run `dot` from
-time to time to keep your environment fresh and up-to-date. You can find
-this script in `bin/`.
+`dot` is the entry point for running the repo's installer flow. It calls
+`script/install`, which in turn runs the topic-specific `install.sh` scripts.
+You can find `dot` in `bin/`.
 
 ## bugs
 
