@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-if test ! "$(uname)" = "Darwin"; then
+set -e
+
+DOTFILES_ROOT="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+
+if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
 fi
 
@@ -12,13 +16,8 @@ fi
 echo "› sudo softwareupdate -i -a"
 sudo softwareupdate -i -a
 
-# Run all macos defaults
-set -e
-
-cd "$(dirname $0)"/..
-
 # find default settings for mac apps and run them iteratively
-find . -name "defaults-*.sh" | while read installer; do
+while IFS= read -r -d '' installer; do
   echo "Running ${installer}"
-  sh -c "${installer}"
-done
+  bash "$installer"
+done < <(find "$DOTFILES_ROOT/macos" -maxdepth 1 -type f -name 'defaults-*.sh' -print0)

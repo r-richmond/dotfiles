@@ -18,7 +18,7 @@ run_installers() {
 
   while IFS= read -r -d '' installer; do
     printf ' running %s\n' "$installer"
-    sh "$installer"
+    bash "$installer"
   done < <(find . "$@" -type f -name install.sh -print0)
 }
 
