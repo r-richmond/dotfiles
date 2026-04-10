@@ -111,3 +111,39 @@ stem or are inspired from Holman's original project.
   - setup powerpack & link to sync folder & setup theme
 - Figure out how to safe misc system preferences
   - keyboard shortcuts defined via macos
+
+## FAQ
+
+### 1. I want to get started quick. How do I install this on a new machine?
+
+Clone the repo into `~/.dotfiles` and run the bootstrap script. That will set up the managed symlinks and kick off the installer flow for the topic directories.
+
+```sh
+git clone https://github.com/r-richmond/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+script/bootstrap
+```
+
+### 2. I added a new `.zsh` file. What do I need to do to have it take effect?
+
+Files ending in `.zsh` are loaded by your shell startup flow, so after adding one you just need to start a new shell or reload your zsh config. If the file changes PATH setup or completion behavior, opening a fresh terminal is the safest option.
+
+```sh
+source ~/.zshrc
+```
+
+### 3. I added a new file that should be symlinked. How do I ensure it is named correctly and where it will go?
+
+Name the file with a `symlink` prefix and treat `+` as a directory separator under `$HOME`. For example, `vscode/symlink.vscode+argv.json` maps to `~/.vscode/argv.json`, and `script/test-symlink` will verify that the destination is what you expect.
+
+```sh
+script/test-symlink
+```
+
+### 4. After I verify the file is set up properly and the symlink is in the right place, which script do I use to symlink it?
+
+Use `script/bootstrap` to create or refresh the managed symlinks. That is the script that applies the repo's symlink naming rules to files under the topic directories.
+
+```sh
+script/bootstrap
+```
