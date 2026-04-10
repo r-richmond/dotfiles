@@ -4,7 +4,9 @@
 
 set -e
 
-DOTFILES_ROOT="${DOTFILES_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+# Resolve DOTFILES when the caller hasn't exported it already.
+DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+export DOTFILES
 
 overwrite_all=false
 backup_all=false
@@ -31,11 +33,11 @@ fail() {
   exit 1
 }
 
-if [ ! -d "$DOTFILES_ROOT" ]; then
-  fail "dotfiles root not found: $DOTFILES_ROOT"
+if [ ! -d "$DOTFILES" ]; then
+  fail "DOTFILES not found: $DOTFILES"
 fi
 
-cd "$DOTFILES_ROOT"
+cd "$DOTFILES"
 
 setup_gitconfig() {
   local local_git_config="$HOME"/dropbox/config/dotfiles/git/symlink.gitconfig.local
@@ -298,7 +300,7 @@ install_dotfiles() {
   while IFS= read -r -d '' src; do
     dst=$(symlink_destination_for "$src") || fail "invalid symlink source: $src"
     link_file "$src" "$dst"
-  done < <(find "$DOTFILES_ROOT" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0)
+  done < <(find "$DOTFILES" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0)
 }
 
 setup_gitconfig

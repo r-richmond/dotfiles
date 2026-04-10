@@ -4,7 +4,8 @@
 
 set -e
 
-DOTFILES_ROOT="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+export DOTFILES
 
 ensure_brew() {
   if command -v brew >/dev/null 2>&1; then
@@ -47,18 +48,18 @@ fi
 
 # Turn off brew analytics
 brew analytics off
-brew bundle --file="$DOTFILES_ROOT/homebrew/universal_cli.brewfile"
+brew bundle --file="$DOTFILES/homebrew/universal_cli.brewfile"
 
 # install universal casks on mac
 if [ "$(uname -s)" = "Darwin" ]; then
-  brew bundle --file="$DOTFILES_ROOT/homebrew/universal_cask.brewfile"
+  brew bundle --file="$DOTFILES/homebrew/universal_cask.brewfile"
 
   echo " - Install personal casks? (y/n) "
   read -r -n 1 answer
   echo ''
   if [ "$answer" != "${answer#[Yy]}" ]; then
     echo '  Installing personal casks...' # new line
-    brew bundle --file="$DOTFILES_ROOT/homebrew/personal_cask.brewfile"
+    brew bundle --file="$DOTFILES/homebrew/personal_cask.brewfile"
   fi
 
   # finalize some brew installs

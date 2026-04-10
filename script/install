@@ -4,14 +4,15 @@
 
 set -e
 
-DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+export DOTFILES
 
 # Ask for the administrator password upfront
 if command -v sudo >/dev/null 2>&1; then
   sudo -v
 fi
 
-cd "$DOTFILES_ROOT"
+cd "$DOTFILES"
 
 run_installers() {
   local installer

@@ -2,7 +2,8 @@
 
 set -e
 
-DOTFILES_ROOT="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+export DOTFILES
 
 if [ "$(uname -s)" != "Darwin" ]; then
   exit 0
@@ -20,4 +21,4 @@ sudo softwareupdate -i -a
 while IFS= read -r -d '' installer; do
   echo "Running ${installer}"
   bash "$installer"
-done < <(find "$DOTFILES_ROOT/macos" -maxdepth 1 -type f -name 'defaults-*.sh' -print0)
+done < <(find "$DOTFILES/macos" -maxdepth 1 -type f -name 'defaults-*.sh' -print0)

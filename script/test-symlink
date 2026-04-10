@@ -2,10 +2,11 @@
 
 set -e
 
-DOTFILES_ROOT="${DOTFILES_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+export DOTFILES
 
-if [ ! -d "$DOTFILES_ROOT" ]; then
-  printf 'DOTFILES_ROOT not found: %s\n' "$DOTFILES_ROOT" >&2
+if [ ! -d "$DOTFILES" ]; then
+  printf 'DOTFILES not found: %s\n' "$DOTFILES" >&2
   exit 1
 fi
 
@@ -86,7 +87,7 @@ while IFS= read -r -d '' src; do
     printf 'BROKEN   %s -> %s (actual: %s)\n' "$src" "$dst" "$current_src"
     broken_count=$((broken_count + 1))
   fi
-done < <(find "$DOTFILES_ROOT" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0)
+done < <(find "$DOTFILES" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0)
 
 printf '\nSummary: ok=%s missing=%s mismatch=%s broken=%s invalid=%s\n' \
   "$ok_count" \

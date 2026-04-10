@@ -2,7 +2,8 @@
 
 set -e
 
-DOTFILES_ROOT="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+export DOTFILES
 
 backup_file () {
   local dst=$1 print=$2
@@ -50,8 +51,8 @@ fi
 
 mkdir -p "$settings_directory"
 
-setup_file "$DOTFILES_ROOT/vscode/settings.json" "$settings_directory/settings.json"
-setup_file "$DOTFILES_ROOT/vscode/keybindings.json" "$settings_directory/keybindings.json"
+setup_file "$DOTFILES/vscode/settings.json" "$settings_directory/settings.json"
+setup_file "$DOTFILES/vscode/keybindings.json" "$settings_directory/keybindings.json"
 
 # Install vscode extensions
 # http://evanhahn.com/atom-apm-install-list/
@@ -61,7 +62,7 @@ if ! command -v code >/dev/null 2>&1; then
 fi
 
 # shellcheck disable=SC1091
-source "$DOTFILES_ROOT/functions/code-extension"
+source "$DOTFILES/functions/code-extension"
 code-extension install-all
 
 exit 0
