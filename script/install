@@ -2,27 +2,33 @@
 #
 # Run all dotfiles installers.
 
-# Ask for the administrator password upfront
-sudo -v
-
 set -e
 
-cd "$(dirname $0)"/..
+DOTFILES_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+
+# Ask for the administrator password upfront
+if command -v sudo >/dev/null 2>&1; then
+  sudo -v
+fi
+
+cd "$DOTFILES_ROOT"
+
+run_installers() {
+  local installer
+
+  while IFS= read -r -d '' installer; do
+    printf ' running %s\n' "$installer"
+    sh "$installer"
+  done < <(find . "$@" -type f -name install.sh -print0)
+}
 
 # run homebrew first
 sh ./homebrew/install.sh
 
-if test ! "$(uname)" = "Darwin"
-  then
-    echo "Running install.sh except ./macos/*"
-    find . -not -path './macos/*' -not -path './homebrew/*' -name install.sh | while read installer ; do
-      echo " runnning ${installer}"
-      sh -c "${installer}" ;
-      done
-  else
-    echo "Running install.sh including ./macos/*"
-    find . -not -path './homebrew/*' -name install.sh | while read installer ; do
-      echo " runnning ${installer}"
-      sh -c "${installer}" ;
-      done
+if [ "$(uname -s)" != "Darwin" ]; then
+  echo "Running install.sh except ./macos/*"
+  run_installers ! -path './macos/*' ! -path './homebrew/*'
+else
+  echo "Running install.sh including ./macos/*"
+  run_installers ! -path './homebrew/*'
 fi

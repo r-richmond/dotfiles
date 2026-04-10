@@ -1,25 +1,100 @@
 #!/usr/bin/env bash
 
-DOTFILES_ROOT=~/.dotfiles
-for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlink*' -not -path '.git/')
-do
+set -e
+
+DOTFILES_ROOT="${DOTFILES_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+
+if [ ! -d "$DOTFILES_ROOT" ]; then
+  printf 'DOTFILES_ROOT not found: %s\n' "$DOTFILES_ROOT" >&2
+  exit 1
+fi
+
+symlink_destination_for() {
+  local src=$1
+  local dst
+
   dst=$(basename "$src")
-  dst="${dst:7}"
+  dst=${dst#symlink}
+
+  if [ -z "$dst" ]; then
+    return 1
+  fi
+
   dst="$HOME/${dst//+//}"
-  echo "good--" "$src" "->" "$dst"
-done
-echo ""
 
-# more correct form but it doesn't retain function definitions
-find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlink*' -not -path '.git/' -exec sh -c '
-  for src do
-    dst=$(basename "$src")
-    dst="${dst:7}"
-    dst="$HOME/${dst//+//}"
-    echo "good--" "$src" "->" "$dst"
-  done' sh {} +
+  if [ "$dst" = "$HOME/" ] || [ "$dst" = "$HOME" ]; then
+    return 1
+  fi
 
-for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '.git/')
-do
-  echo "bad--" "$src"
-done
+  printf '%s\n' "$dst"
+}
+
+resolve_path() {
+  local path=$1
+
+  (
+    cd "$(dirname "$path")" >/dev/null 2>&1 || exit 1
+    printf '%s/%s\n' "$(pwd -P)" "$(basename "$path")"
+  )
+}
+
+resolve_link_target() {
+  local link_path=$1
+  local target
+
+  target=$(readlink "$link_path") || return 1
+
+  (
+    cd "$(dirname "$link_path")" >/dev/null 2>&1 || exit 1
+    cd "$(dirname "$target")" >/dev/null 2>&1 || exit 1
+    printf '%s/%s\n' "$(pwd -P)" "$(basename "$target")"
+  )
+}
+
+ok_count=0
+missing_count=0
+mismatch_count=0
+broken_count=0
+invalid_count=0
+
+while IFS= read -r -d '' src; do
+  expected_src=$(resolve_path "$src")
+  dst=$(symlink_destination_for "$src") || {
+    printf 'INVALID  %s\n' "$src"
+    invalid_count=$((invalid_count + 1))
+    continue
+  }
+
+  if [ ! -L "$dst" ]; then
+    printf 'MISSING  %s -> %s\n' "$src" "$dst"
+    missing_count=$((missing_count + 1))
+    continue
+  fi
+
+  current_src=$(readlink "$dst")
+  resolved_current_src=$(resolve_link_target "$dst" 2>/dev/null || true)
+  if [ "$current_src" = "$src" ] || [ -n "$resolved_current_src" ] && [ "$resolved_current_src" = "$expected_src" ]; then
+    printf 'OK       %s -> %s\n' "$src" "$dst"
+    ok_count=$((ok_count + 1))
+    continue
+  fi
+
+  if [ -e "$dst" ]; then
+    printf 'MISMATCH %s -> %s (actual: %s)\n' "$src" "$dst" "$current_src"
+    mismatch_count=$((mismatch_count + 1))
+  else
+    printf 'BROKEN   %s -> %s (actual: %s)\n' "$src" "$dst" "$current_src"
+    broken_count=$((broken_count + 1))
+  fi
+done < <(find "$DOTFILES_ROOT" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0)
+
+printf '\nSummary: ok=%s missing=%s mismatch=%s broken=%s invalid=%s\n' \
+  "$ok_count" \
+  "$missing_count" \
+  "$mismatch_count" \
+  "$broken_count" \
+  "$invalid_count"
+
+if [ "$missing_count" -gt 0 ] || [ "$mismatch_count" -gt 0 ] || [ "$broken_count" -gt 0 ] || [ "$invalid_count" -gt 0 ]; then
+  exit 1
+fi

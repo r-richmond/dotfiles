@@ -2,37 +2,47 @@
 #
 # bootstrap installs things.
 
-# cd "$(dirname "$0")/.."
-# DOTFILES_ROOT=$(pwd -P)
-DOTFILES_ROOT=~/.dotfiles
-
 set -e
+
+DOTFILES_ROOT="${DOTFILES_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+
+overwrite_all=false
+backup_all=false
+absorb_all=false
+skip_all=false
 
 echo ''
 
 info() {
-  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+  printf "\r  [ \033[00;34m..\033[0m ] %s\n" "$1"
 }
 
 user() {
-  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
+  printf "\r  [ \033[0;33m??\033[0m ] %b\n" "$1"
 }
 
 success() {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
 }
 
 fail() {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"
   echo ''
-  exit
+  exit 1
 }
 
+if [ ! -d "$DOTFILES_ROOT" ]; then
+  fail "dotfiles root not found: $DOTFILES_ROOT"
+fi
+
+cd "$DOTFILES_ROOT"
+
 setup_gitconfig() {
-  local_git_config="$HOME"/dropbox/config/dotfiles/git/symlink.gitconfig.local
+  local local_git_config="$HOME"/dropbox/config/dotfiles/git/symlink.gitconfig.local
+
   if [ -f "$local_git_config" ] && ! [ -f "$HOME"/.gitconfig.local ]; then
-    src=local_git_config
-    dst="$HOME"/.gitconfig.local
+    local src="$local_git_config"
+    local dst="$HOME"/.gitconfig.local
     link_file "$src" "$dst"
     success "Linked personal $src to $dst"
   fi
@@ -40,15 +50,19 @@ setup_gitconfig() {
   if ! [ -f git/symlink.gitconfig.local ] && ! [ -f ~/.gitconfig.local ]; then
     info 'setup gitconfig'
 
-    git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]; then
+    local git_credential='cache'
+    if [ "$(uname -s)" = "Darwin" ]; then
       git_credential='osxkeychain'
     fi
 
     user ' - What is your github author name?'
-    read -e git_authorname
+    read -r -e git_authorname
     user ' - What is your github author email?'
-    read -e git_authoremail
+    read -r -e git_authoremail
+
+    if ! [ -f git/example.symlink.gitconfig.local ]; then
+      fail 'missing git/example.symlink.gitconfig.local'
+    fi
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/example.symlink.gitconfig.local >git/symlink.gitconfig.local
 
@@ -58,11 +72,112 @@ setup_gitconfig() {
 
 backup_file() {
   local dst=$1 print=$2
-  mkdir -p "$HOME"/backup-dot-files"$dst"
-  mv "$dst" "$HOME"/backup-dot-files"$dst"
-  if [ "$print" == "true" ]; then
-    success "moved $dst to $HOME/backup-dot-files"
+  local backup_root="$HOME/backup-dot-files"
+  local backup_path="$backup_root$dst"
+  local backup_dir
+
+  backup_dir=$(dirname "$backup_path")
+  mkdir -p "$backup_dir"
+
+  if [ -e "$backup_path" ] || [ -L "$backup_path" ]; then
+    backup_path="$backup_path.$(date +%Y%m%d%H%M%S)"
   fi
+
+  mv "$dst" "$backup_path"
+
+  if [ "$print" = "true" ]; then
+    success "moved $dst to $backup_path"
+  fi
+}
+
+symlink_destination_for() {
+  local src=$1
+  local dst
+
+  dst=$(basename "$src")
+  dst=${dst#symlink}
+
+  if [ -z "$dst" ]; then
+    return 1
+  fi
+
+  dst="$HOME/${dst//+//}"
+
+  if [ "$dst" = "$HOME/" ] || [ "$dst" = "$HOME" ]; then
+    return 1
+  fi
+
+  printf '%s\n' "$dst"
+}
+
+resolve_path() {
+  local path=$1
+
+  (
+    cd "$(dirname "$path")" >/dev/null 2>&1 || exit 1
+    printf '%s/%s\n' "$(pwd -P)" "$(basename "$path")"
+  )
+}
+
+resolve_link_target() {
+  local link_path=$1
+  local target
+
+  target=$(readlink "$link_path") || return 1
+
+  (
+    cd "$(dirname "$link_path")" >/dev/null 2>&1 || exit 1
+    cd "$(dirname "$target")" >/dev/null 2>&1 || exit 1
+    printf '%s/%s\n' "$(pwd -P)" "$(basename "$target")"
+  )
+}
+
+run_dot_installs() {
+  local output
+  local status=0
+
+  if output="$(bin/dot 2>&1)"; then
+    status=0
+  else
+    status=$?
+  fi
+
+  if [ -n "$output" ]; then
+    while IFS= read -r data; do
+      info "$data"
+    done <<<"$output"
+  fi
+
+  return "$status"
+}
+
+find_zsh() {
+  local candidate
+
+  for candidate in /opt/homebrew/bin/zsh /usr/local/bin/zsh /usr/bin/zsh; do
+    if [ -x "$candidate" ]; then
+      printf '%s\n' "$candidate"
+      return 0
+    fi
+  done
+
+  return 1
+}
+
+ensure_login_shell() {
+  local target_shell=$1
+  local current_shell
+
+  current_shell=$(dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $2}')
+
+  if [ "$current_shell" = "$target_shell" ]; then
+    success "login shell already set to $target_shell"
+    return 0
+  fi
+
+  info "changing shell to $target_shell"
+  sudo dscl . -create "/Users/$USER" UserShell "$target_shell"
+  success "All new sessions will use $target_shell"
 }
 
 link_file() {
@@ -75,13 +190,22 @@ link_file() {
   local action=
 
   # check if target exists and is symlink
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]; then
+  if [ -e "$dst" ] || [ -L "$dst" ]; then
 
     if [ "$overwrite_all" != "true" ] && [ "$backup_all" != "true" ] && [ "$absorb_all" != "true" ] && [ "$skip_all" != "true" ]; then
 
-      local currentSrc="$(readlink $dst)"
+      local current_src=''
+      local resolved_current_src=''
+      local resolved_src
 
-      if [ "$currentSrc" == "$src" ]; then
+      resolved_src=$(resolve_path "$src")
+
+      if [ -L "$dst" ]; then
+        current_src="$(readlink "$dst")"
+        resolved_current_src=$(resolve_link_target "$dst" 2>/dev/null || true)
+      fi
+
+      if [ "$current_src" = "$src" ] || [ -n "$resolved_current_src" ] && [ "$resolved_current_src" = "$resolved_src" ]; then
 
         skip=true
 
@@ -89,7 +213,8 @@ link_file() {
 
         user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
         [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [a]bsorb, [A]bsorb all, [b]ackup, [B]ackup all?"
-        read -n 1 action
+        read -r -n 1 action
+        echo ''
 
         case "$action" in
         o)
@@ -129,70 +254,73 @@ link_file() {
     skip=${skip:-$skip_all}
     absorb=${absorb:-$absorb_all}
 
-    if [ "$overwrite" == "true" ]; then
+    if [ "$overwrite" = "true" ]; then
       rm -rf "$dst"
       success "removed $dst"
     fi
 
-    if [ "$backup" == "true" ]; then
-      backup_file $dst "true"
+    if [ "$backup" = "true" ]; then
+      backup_file "$dst" "true"
     fi
 
-    if [ "$absorb" == "true" ]; then
-      true >"$src"
-      cat "$dst" >>"$src"
-      backup_file $dst "false"
+    if [ "$absorb" = "true" ]; then
+      local absorbed_src
+
+      absorbed_src=$(mktemp "${src}.XXXXXX")
+      cat "$dst" >"$absorbed_src"
+      mv "$absorbed_src" "$src"
+      backup_file "$dst" "false"
       success "review changes in git - absorbed $dst to $src"
     fi
 
-    if [ "$skip" == "true" ]; then
+    if [ "$skip" = "true" ]; then
       success "skipped $src"
     fi
   fi
 
   if [ "$skip" != "true" ]; then
-    parent=$(dirname "$2")
+    local parent
+
+    parent=$(dirname "$dst")
     if [ ! -d "$parent" ]; then
       mkdir -p "$parent"
     fi
-    ln -s "$1" "$2"
-    success "linked $1 to $2"
+    ln -s "$src" "$dst"
+    success "linked $src to $dst"
   fi
 }
 
 install_dotfiles() {
   info 'installing dotfiles'
 
-  local overwrite_all=false backup_all=false skip_all=false
+  local src dst
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'symlink*' -not -path '.git/'); do
-    # http://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
-    # ignores first 7 characters 0-based
-    dst=$(basename "$src")
-    dst="${dst:7}"
-    dst="$HOME/${dst//+//}"
+  while IFS= read -r -d '' src; do
+    dst=$(symlink_destination_for "$src") || fail "invalid symlink source: $src"
     link_file "$src" "$dst"
-  done
+  done < <(find "$DOTFILES_ROOT" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0)
 }
 
 setup_gitconfig
 install_dotfiles
 
 # Lets run install files
-if source bin/dot | while read -r data; do info "$data"; done; then
+if run_dot_installs; then
   success "dependencies installs"
 else
   fail "error installing dependencies"
 fi
 
 # If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]; then
+if [ "$(uname -s)" = "Darwin" ]; then
   info "Running on mac"
 fi
 
-info 'changing shell'
-sudo dscl . -create /Users/$USER UserShell /opt/homebrew/bin/zsh
-success "All new sessions will use $SHELL"
+if zsh_path=$(find_zsh); then
+  ensure_login_shell "$zsh_path"
+else
+  fail 'zsh not found in standard locations'
+fi
 
 echo ''
 success '  All installed!'

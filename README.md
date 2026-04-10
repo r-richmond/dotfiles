@@ -58,6 +58,9 @@ script/bootstrap
 This will symlink the appropriate files in `.dotfiles` to your home directory.
 Everything is configured and tweaked within `~/.dotfiles`.
 
+To validate that the expected symlinks are present and pointing at the right
+files, run `script/test-symlink`.
+
 The main file you'll want to change right off the bat is `zsh/symlink.zshrc`,
 which sets up a few paths that'll be different on your particular machine.
 
