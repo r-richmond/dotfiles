@@ -3,8 +3,10 @@
 # Usage: code-extension <option>
 #
 # 'backup : Backs up your installed extensions to $DOTFILES/vscode/extensions.txt'
+# 'help : List available commands'
 # 'install : Installs extensions not installed that are listed in $DOTFILES/vscode/extensions.txt'
 # 'install-all : Installs or Reinstalls all extensions listed in $DOTFILES/vscode/extensions.txt'
+# 'install-missing : Installs extensions not installed that are listed in $DOTFILES/vscode/extensions.txt'
 # 'list : Lists all installed extensions'
 # 'list-missing : Lists extensions not installed that are in $DOTFILES/vscode/extensions.txt'
 # 'list-new : Lists installed extensions that are not saved to $DOTFILES/vscode/extensions.txt'
@@ -21,6 +23,7 @@ code-extension () {
       fi;                                                                                           ;;
     list) code --list-extensions                                                                    ;;
     install-all) cat "$DOTFILES/vscode/extensions.txt" | xargs -L1 code --force --install-extension ;;
+    install-missing) code-extension list-missing | xargs -L1 code --install-extension               ;;
     list-missing) comm -i -1 -3 <(code-extension list) <(cat "$DOTFILES/vscode/extensions.txt")     ;;
     list-new) comm -i -1 -3 <(cat "$DOTFILES/vscode/extensions.txt") <(code-extension list)         ;;
     remove-new)
@@ -29,6 +32,17 @@ code-extension () {
       else
         code-extension list-new | xargs -L1 code --uninstall-extension
       fi;                                                                                           ;;
+    help) echo 'Usage: code-extension <option>'
+          echo ''
+          echo "'backup : Backs up your installed extensions to $DOTFILES/vscode/extensions.txt'"
+          echo "'help : Prints this command'"
+          echo "'install : Installs extensions not installed that are listed in $DOTFILES/vscode/extensions.txt'"
+          echo "'install-all : Installs or Reinstalls all extensions listed in $DOTFILES/vscode/extensions.txt'"
+          echo "'install-missing : Installs extensions not installed that are listed in $DOTFILES/vscode/extensions.txt'"
+          echo "'list : Lists all installed extensions'"
+          echo "'list-missing : Lists extensions not installed that are in $DOTFILES/vscode/extensions.txt'"
+          echo "'list-new : Lists installed extensions that are not saved to $DOTFILES/vscode/extensions.txt'"
+          echo "'remove-new : Removes installed extensions that are not saved to $DOTFILES/vscode/extensions.txt'" ;;
     *) echo 'Please pass a valid option'                                                            ;;
   esac
 }

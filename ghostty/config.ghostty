@@ -1,0 +1,10 @@
+# set the following in ~/Library/Application\ Support/com.mitchellh.ghostty/config.ghostty
+# config-file=../../../.dotfiles/ghostty/config.ghostty
+# https://ghostty.org/docs/config
+# export XDG_CONFIG_HOME=$HOME/.dotfiles
+background-opacity = 0.90
+background-blur-radius = 1
+env = config=v0.0.2
+theme = Dracula+
+quit-after-last-window-closed = true
+shell-integration-features = ssh-terminfo,ssh-env

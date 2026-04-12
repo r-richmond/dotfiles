@@ -6,8 +6,10 @@
 local -a subcmds
 subcmds=(
   'backup:Backs up your installed packages to ~/.vscode/extensions.txt'
+  'help:List available commands'
   'install:Installs packages not installed that are listed in ~/.vscode/extensions.txt'
   'install-all:Installs or Reinstalls all packages listed in ~/.vscode/extensions.txt'
+  'install-missing:Installs packages not installed that are listed in ~/.vscode/extensions.txt'
   'list:Lists all installed packages'
   'list-missing:Lists packages not installed that are in ~/.vscode/extensions.txt'
   'list-new:Lists installed packages that are not saved to ~/.vscode/extensions.txt'

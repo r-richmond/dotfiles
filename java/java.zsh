@@ -8,15 +8,15 @@
 # # sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 
 
-if [ -f /usr/libexec/java_home ]; then
+if [ -f /usr/libexec/java_home ] && [ -f $HOME/flink ]; then
   export JAVA_HOME=$(/usr/libexec/java_home -v 17)
   export PATH=$JAVA_HOME/bin:$PATH
 else
   # sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk
 fi
 
-if [ -d ~/flink ]; then
-  export FLINK_HOME=~/flink/flink-2.0.0
+if [ -d $HOME/flink ]; then
+  export FLINK_HOME=$HOME/flink/flink-2.0.0
   export PATH=$FLINK_HOME/bin:$PATH
 else
   # sudo ln -sfn /opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk-17.jdk

@@ -102,3 +102,9 @@ autoload bashcompinit && bashcompinit
 if [ -f "$(brew --prefix)/etc/bash_completion.d/az" ]; then
   source $(brew --prefix)/etc/bash_completion.d/az
 fi
+
+# Added by LM Studio CLI (lms)
+if [ -d "$HOME/.lmstudio/bin" ] ; then
+  export PATH="$HOME/.lmstudio/bin:$PATH"
+fi
+# End of LM Studio CLI section

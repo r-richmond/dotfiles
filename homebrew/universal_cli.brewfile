@@ -2,6 +2,7 @@ brew 'bat'
 brew 'diff-so-fancy' # https://github.com/so-fancy/diff-so-fancy
 brew 'fd' # find alternative
 brew 'fzf'
+brew 'gh' # GitHub CLI
 brew 'git'
 brew 'git-extras' # https://github.com/tj/git-extras
 brew 'git-lfs'
@@ -14,12 +15,12 @@ brew 'ispell' # spell checker for nano
 brew 'lsd'
 brew 'nano'
 brew 'nmap' # port tool
-brew 'npm'
+brew 'node'
 brew 'numbat' # https://github.com/sharkdp/numbat
 brew 'nushell'
 # brew 'openjdk' # java
 brew 'powerlevel10k'
-brew 'python' # This is now python 3 :D
+brew 'python'
 brew 'ripgrep'
 brew 'shellcheck' # https://github.com/koalaman/shellcheck
 brew 'trash'
