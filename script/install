@@ -24,7 +24,7 @@ run_installers() {
 }
 
 # run homebrew first
-sh ./homebrew/install.sh
+bash ./homebrew/install.sh
 
 if [ "$(uname -s)" != "Darwin" ]; then
   echo "Running install.sh except ./macos/*"

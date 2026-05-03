@@ -74,7 +74,7 @@ while IFS= read -r -d '' src; do
 
   current_src=$(readlink "$dst")
   resolved_current_src=$(resolve_link_target "$dst" 2>/dev/null || true)
-  if [ "$current_src" = "$src" ] || [ -n "$resolved_current_src" ] && [ "$resolved_current_src" = "$expected_src" ]; then
+  if [ "$current_src" = "$src" ] || { [ -n "$resolved_current_src" ] && [ "$resolved_current_src" = "$expected_src" ]; }; then
     printf 'OK       %s -> %s\n' "$src" "$dst"
     ok_count=$((ok_count + 1))
     continue
