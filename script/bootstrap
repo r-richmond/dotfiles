@@ -196,7 +196,7 @@ link_file() {
         resolved_current_src=$(resolve_link_target "$dst" 2>/dev/null || true)
       fi
 
-      if [ "$current_src" = "$src" ] || [ -n "$resolved_current_src" ] && [ "$resolved_current_src" = "$resolved_src" ]; then
+      if [ "$current_src" = "$src" ] || { [ -n "$resolved_current_src" ] && [ "$resolved_current_src" = "$resolved_src" ]; }; then
 
         skip=true
 
