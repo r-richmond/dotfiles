@@ -13,7 +13,13 @@ if ! command -v brew >/dev/null 2>&1; then
 fi
 
 jdk_link=/Library/Java/JavaVirtualMachines/openjdk.jdk
-jdk_target="$(brew --prefix openjdk 2>/dev/null)/libexec/openjdk.jdk"
+
+if ! jdk_prefix="$(brew --prefix openjdk 2>/dev/null)"; then
+  echo 'openjdk not installed, skipping java install.sh'
+  exit 0
+fi
+
+jdk_target="$jdk_prefix/libexec/openjdk.jdk"
 
 if [ ! -e "$jdk_link" ] && [ -d "$jdk_target" ]; then
   echo "setting java to use brew install openjdk"

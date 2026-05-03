@@ -37,6 +37,10 @@ if [ ! -d "$DOTFILES" ]; then
   fail "DOTFILES not found: $DOTFILES"
 fi
 
+if [ "$(uname -s)" != "Darwin" ]; then
+  fail 'script/bootstrap only supports macOS'
+fi
+
 cd "$DOTFILES"
 
 setup_gitconfig() {
@@ -135,22 +139,7 @@ resolve_link_target() {
 }
 
 run_dot_installs() {
-  local output
-  local status=0
-
-  if output="$(bin/dot 2>&1)"; then
-    status=0
-  else
-    status=$?
-  fi
-
-  if [ -n "$output" ]; then
-    while IFS= read -r data; do
-      info "$data"
-    done <<<"$output"
-  fi
-
-  return "$status"
+  bin/dot
 }
 
 find_zsh() {
