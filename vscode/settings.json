@@ -10,12 +10,6 @@
     "*.brewfile": "pip-requirements",
     "*.yaml.template": "yaml",
   },
-  "gitlens.blame.dateFormat": "YYYY-MM-DD",
-  "gitlens.currentLine.dateFormat": "YYYY-MM-DD",
-  "gitlens.defaultDateFormat": "YYYY-MM-DD hh:mm:ss",
-  "gitlens.defaultDateShortFormat": "YYYY-MM-DD",
-  "gitlens.hovers.enabled": false,
-  "gitlens.statusBar.dateFormat": "YYYY-MM-DD",
   "path-intellisense.showHiddenFiles": true,
   "prettier.printWidth": 120,
   "[python]": {
@@ -48,7 +42,6 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
-  "gitlens.codeLens.enabled": false,
   "github.copilot.enable": {
     "*": true,
     "plaintext": true,
@@ -88,7 +81,7 @@
   "chat.agent.enabled": true,
   "git.blame.editorDecoration.enabled": true,
   "git.blame.statusBarItem.enabled": true,
-  "gitlens.blame.toggleMode": "window",
+  "git.addAICoAuthor": "off",
   "docker.extension.enableComposeLanguageServer": false,
   "go.toolsManagement.autoUpdate": true,
   "[dockercompose]": {
@@ -103,25 +96,22 @@
     "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "[github-actions-workflow]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml",
-  },
-  "gitlens.ai.model": "vscode",
-  "gitlens.ai.vscode.model": "copilot:gpt-4.1",
-  "gitlens.views.scm.grouped.views": {
-    "commits": true,
-    "branches": true,
-    "remotes": true,
-    "stashes": true,
-    "tags": true,
-    "worktrees": true,
-    "contributors": true,
-    "fileHistory": false,
-    "repositories": true,
-    "searchAndCompare": true,
-    "launchpad": false,
+    "editor.defaultFormatter": "redhat.vscode-yaml"
   },
   "github.copilot.nextEditSuggestions.enabled": true,
   "chat.agent.maxRequests": 125,
   "chat.mcp.gallery.enabled": true,
   "chat.viewSessions.orientation": "stacked",
+  "python.analysis.referencesCodeLens": true,
+  "chat.tools.terminal.autoApprove": {
+    "/^uv run poe pyright$/": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "/^uv run poe check_type$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  },
+  "chat.experimental.incrementalRendering.enabled": true
 }
