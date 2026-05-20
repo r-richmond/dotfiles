@@ -96,7 +96,7 @@
     "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "[github-actions-workflow]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
   },
   "github.copilot.nextEditSuggestions.enabled": true,
   "chat.agent.maxRequests": 125,
@@ -106,12 +106,16 @@
   "chat.tools.terminal.autoApprove": {
     "/^uv run poe pyright$/": {
       "approve": true,
-      "matchCommandLine": true
+      "matchCommandLine": true,
     },
     "/^uv run poe check_type$/": {
       "approve": true,
-      "matchCommandLine": true
-    }
+      "matchCommandLine": true,
+    },
   },
-  "chat.experimental.incrementalRendering.enabled": true
+  "chat.experimental.incrementalRendering.enabled": true,
+  "workbench.diffEditorAssociations": {
+    "*.md": "vscode.markdown.preview.editor",
+  },
+  "chat.tools.compressOutput.enabled": true,
 }
