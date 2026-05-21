@@ -21,8 +21,7 @@ SAVEHIST=5000000
 
 setopt APPEND_HISTORY     # adds history
 setopt EXTENDED_HISTORY   # add timestamps to history format ‘: <beginning time>:<elapsed seconds>;<command>’.
-setopt INC_APPEND_HISTORY # adds history incrementally
-setopt SHARE_HISTORY      # share it across sessions
+setopt INC_APPEND_HISTORY_TIME # adds history after each command finishes so durations are recorded
 setopt HIST_IGNORE_DUPS   # Do not enter command lines into the history list if they are duplicates of the previous event.
 setopt HIST_VERIFY        # Whenever the user enters a line with history expansion, don’t execute the line directly; instead, perform history expansion and reload the line into the editing buffer.
 setopt HIST_REDUCE_BLANKS # Remove superfluous blanks from each command line being added to the history list
