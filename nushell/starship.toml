@@ -1,8 +1,13 @@
 add_newline = false
 command_timeout = 800
 
-format = '$directory$git_branch$git_status$python$bun${env_var.STARSHIP_COMMAND_DURATION}$line_break$character'
-right_format = '$gcloud$localip${custom.external_ip}$time'
+format = '$shell$directory$git_branch$git_status$git_metrics$kubernetes$python$bun$golang${env_var.STARSHIP_COMMAND_DURATION}$status$line_break$character'
+right_format = '$gcloud$aws$azure$localip$time'
+
+[shell]
+disabled = false
+format = '[$indicator]($style) '
+style = 'white bold'
 
 [directory]
 format = '[$path]($style)[$read_only]($read_only_style)'
@@ -21,11 +26,22 @@ symbol = 'git:'
 format = ' [$all_status$ahead_behind]($style)'
 style = 'bold red'
 
+[git_metrics]
+added_style = 'bold green'
+deleted_style = 'bold red'
+disabled = false
+format = ' ([+$added]($added_style))([-$deleted]($deleted_style))'
+
+[kubernetes]
+disabled = false
+format = ' [$symbol$context( \($namespace\))]($style)'
+style = 'bold cyan'
+
 [python]
 detect_extensions = []
 detect_files = ['pyproject.toml', 'uv.lock']
 detect_folders = ['.venv']
-format = ' [using](white) [py ${version}(.$virtualenv)]($style)'
+format = ' [using](white) [$symbol${version}(.$virtualenv)]($style)'
 python_binary = [
   [
     '.venv/bin/python',
@@ -41,32 +57,44 @@ python_binary = [
   ],
 ]
 style = 'bold yellow'
+symbol = '🐍 '
 
 [bun]
-format = ' [using](white) [bun $version]($style)'
+format = ' [using](white) [$symbol$version]($style)'
 style = 'bold red'
+
+[golang]
+format = ' [using](white) [$symbol($version )($mod_version)]($style)'
+style = 'bold cyan'
 
 [env_var.STARSHIP_COMMAND_DURATION]
 format = ' took [$env_value]($style)'
 style = '#87d7ff'
+
+[status]
+disabled = false
+format = ' [status $status]($style)'
+style = 'bold red'
 
 [gcloud]
 format = '([$symbol$project]($style) )'
 style = 'bold blue'
 symbol = '☁ '
 
+[aws]
+format = '[$symbol($profile )(\($region\))]($style) '
+style = 'bold yellow'
+
+[azure]
+disabled = false
+format = '[$symbol($subscription)]($style) '
+style = 'blue bold'
+
 [localip]
 disabled = false
 format = '[int](white) [$localipv4]($style) '
 ssh_only = false
 style = '#87d7ff'
-
-[custom.external_ip]
-command = '^curl --max-time 0.4 -fsS https://api.ipify.org | str trim'
-description = 'External IP address'
-format = '[ext](white) [$output]($style) '
-style = '#87d7ff'
-when = 'which curl | is-not-empty'
 
 [time]
 disabled = false
