@@ -28,8 +28,14 @@ $env.config.history = {
 $env.NU_ENHANCED_HISTORY = ($nu.default-config-dir | path join history-enhanced.jsonl)
 
 def _nu-git-history-context [cwd: string] {
-	let root = (try { ^git -C $cwd rev-parse --show-toplevel | str trim } catch { "" })
-	let branch = (try { ^git -C $cwd rev-parse --abbrev-ref HEAD | str trim } catch { "" })
+	let root_result = (^git -C $cwd rev-parse --show-toplevel | complete)
+	let root = (if $root_result.exit_code == 0 { $root_result.stdout | str trim } else { "" })
+	let branch = (if ($root | is-empty) {
+		""
+	} else {
+		let branch_result = (^git -C $cwd rev-parse --abbrev-ref HEAD | complete)
+		if $branch_result.exit_code == 0 { $branch_result.stdout | str trim } else { "" }
+	})
 
 	{
 		repo: (if ($root | is-empty) { "" } else { $root | path basename })
@@ -64,6 +70,18 @@ def _nu-display-history-path [path: string] {
 	} else {
 		$path
 	}
+}
+
+def _nu-history-column [value: any width: int] {
+	let text = ($value | default "" | into string)
+	let truncated = (if ($text | str length) > $width {
+		let end = ($width - 2)
+		$"($text | str substring 0..$end)~"
+	} else {
+		$text
+	})
+
+	$truncated | fill --alignment left --width $width
 }
 
 def _nu-enhanced-history-last-command [history_file: string] {
@@ -119,22 +137,39 @@ def _nu-enhanced-history-records [] {
 def _nu-enhanced-history-rows [] {
 	_nu-enhanced-history-records
 	| each {|row|
-		[$row.timestamp $row.duration $row.cwd $row.git_repo $row.git_branch $row.command] | str join (char tab)
+		let display = ([
+			(_nu-history-column $row.timestamp 23)
+			(_nu-history-column $row.duration 10)
+			(_nu-history-column $row.cwd 36)
+			(_nu-history-column $row.git_repo 18)
+			(_nu-history-column $row.git_branch 22)
+			$row.command
+		] | str join "  ")
+
+		[$display $row.command] | str join (char tab)
 	}
 }
 
 def --env _nu-fzf-history [] {
+	let header = ([
+		(_nu-history-column timestamp 23)
+		(_nu-history-column duration 10)
+		(_nu-history-column cwd 36)
+		(_nu-history-column repo 18)
+		(_nu-history-column branch 22)
+		command
+	] | str join "  ")
 	let result = (
 		_nu-enhanced-history-rows
 		| str join (char nl)
-		| ^fzf --delimiter (char tab) --with-nth "1.." --nth "6..,.." --scheme history --prompt "nu history> " --header "timestamp | duration | cwd | repo | branch | command" --bind "ctrl-r:toggle-sort" --query (commandline)
+		| ^fzf --delimiter (char tab) --with-nth "1" --nth "2..,.." --scheme history --prompt "nu history> " --header $header --bind "ctrl-r:toggle-sort" --query (commandline)
 		| complete
 	)
 
 	let selected = ($result.stdout | str trim --right)
 
 	if $result.exit_code == 0 and not ($selected | is-empty) {
-		let command = (($selected | split row (char tab)) | get 5)
+		let command = (($selected | split row (char tab)) | get 1)
 		commandline edit --replace $command
 		commandline set-cursor --end
 	}
