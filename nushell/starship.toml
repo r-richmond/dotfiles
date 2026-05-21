@@ -1,0 +1,79 @@
+add_newline = false
+command_timeout = 800
+
+format = '$directory$git_branch$git_status$python$bun${env_var.STARSHIP_COMMAND_DURATION}$line_break$character'
+right_format = '$gcloud$localip${custom.external_ip}$time'
+
+[directory]
+format = '[$path]($style)[$read_only]($read_only_style)'
+repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)'
+style = 'bold #4169e1'
+repo_root_style = 'bold #4169e1'
+truncation_length = 4
+truncate_to_repo = false
+
+[git_branch]
+format = ' [on](white) [$symbol$branch(:$remote_branch)]($style)'
+style = 'bold #32cd32'
+symbol = 'git:'
+
+[git_status]
+format = ' [$all_status$ahead_behind]($style)'
+style = 'bold red'
+
+[python]
+detect_extensions = []
+detect_files = ['pyproject.toml', 'uv.lock']
+detect_folders = ['.venv']
+format = ' [using](white) [py ${version}(.$virtualenv)]($style)'
+python_binary = [
+  [
+    '.venv/bin/python',
+  ],
+  [
+    'uv',
+    'run',
+    '--no-python-downloads',
+    'python',
+  ],
+  [
+    'python3',
+  ],
+]
+style = 'bold yellow'
+
+[bun]
+format = ' [using](white) [bun $version]($style)'
+style = 'bold red'
+
+[env_var.STARSHIP_COMMAND_DURATION]
+format = ' took [$env_value]($style)'
+style = '#87d7ff'
+
+[gcloud]
+format = '([$symbol$project]($style) )'
+style = 'bold blue'
+symbol = '☁ '
+
+[localip]
+disabled = false
+format = '[int](white) [$localipv4]($style) '
+ssh_only = false
+style = '#87d7ff'
+
+[custom.external_ip]
+command = '^curl --max-time 0.4 -fsS https://api.ipify.org | str trim'
+description = 'External IP address'
+format = '[ext](white) [$output]($style) '
+style = '#87d7ff'
+when = 'which curl | is-not-empty'
+
+[time]
+disabled = false
+format = '[at](white) [$time]($style)'
+style = '#87d7ff'
+time_format = '%Y-%m-%d %H:%M:%S'
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
