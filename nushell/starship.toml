@@ -1,8 +1,10 @@
+# Inserts blank line between shell prompts.
 add_newline = false
+# Timeout for commands executed by starship (in milliseconds).
 command_timeout = 800
 
-format = '$shell$directory$git_branch$git_status$git_metrics$kubernetes$python$bun$golang${env_var.STARSHIP_COMMAND_DURATION}$status$line_break$character'
-right_format = '$gcloud$aws$azure$localip$time'
+format = '$shell$directory$git_branch$git_status$git_metrics$python$bun$golang$time${env_var.STARSHIP_COMMAND_DURATION}$status$line_break$character'
+right_format = '$gcloud$aws$azure$localip'
 
 [shell]
 disabled = false
@@ -10,7 +12,7 @@ format = '[$indicator]($style) '
 style = 'white bold'
 
 [directory]
-format = '[$path]($style)[$read_only]($read_only_style)'
+format = '[$path]($style)[$read_only]($read_only_style) '
 repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)'
 style = 'bold #4169e1'
 repo_root_style = 'bold #4169e1'
@@ -18,30 +20,41 @@ truncation_length = 4
 truncate_to_repo = false
 
 [git_branch]
-format = ' [on](white) [$symbol$branch(:$remote_branch)]($style)'
+format = ' [on](white) [$symbol$branch(:$remote_branch)]($style) '
 style = 'bold #32cd32'
 symbol = 'git:'
 
 [git_status]
-format = ' [$all_status$ahead_behind]($style)'
-style = 'bold red'
+# The format string ensures all requested states and stash counts are displayed
+format = '([\[$staged$modified$conflicted$deleted$untracked$stashed\]]($style) )'
+style = "bold red"
+
+# File States Configuration
+staged = '[+$count ](yellow)'    # Plus with file count
+modified = '[!$count ](yellow)'  # Modifed with file count
+conflicted = '⚔️[!$count ](red)' # Sword with file count
+deleted = '🗑️[-$count ](red)'    # Trash with file count
+untracked = '[?$count ](blue)'   # Question mark with file count
+
+# Stashes Configuration
+stashed = '[*$count](purple)' # Stash icon with total count
 
 [git_metrics]
 added_style = 'bold green'
 deleted_style = 'bold red'
 disabled = false
-format = ' ([+$added]($added_style))([-$deleted]($deleted_style))'
+format = '(L[+$added]($added_style))([-$deleted]($deleted_style)) '
 
 [kubernetes]
 disabled = false
-format = ' [$symbol$context( \($namespace\))]($style)'
+format = '[$symbol$context( \($namespace\))]($style) '
 style = 'bold cyan'
 
 [python]
 detect_extensions = []
 detect_files = ['pyproject.toml', 'uv.lock']
 detect_folders = ['.venv']
-format = ' [using](white) [$symbol${version}(.$virtualenv)]($style)'
+format = '[using](white) [$symbol${version}(.$virtualenv)]($style) '
 python_binary = [
   [
     '.venv/bin/python',
@@ -60,24 +73,24 @@ style = 'bold yellow'
 symbol = '🐍 '
 
 [bun]
-format = ' [using](white) [$symbol$version]($style)'
+format = '[using](white) [$symbol$version]($style) '
 style = 'bold red'
 
 [golang]
-format = ' [using](white) [$symbol($version )($mod_version)]($style)'
+format = '[using](white) [$symbol($version )($mod_version)]($style) '
 style = 'bold cyan'
 
 [env_var.STARSHIP_COMMAND_DURATION]
 format = ' took [$env_value]($style)'
-style = '#87d7ff'
+style = '#e5ff1d'
 
 [status]
 disabled = false
-format = ' [status $status]($style)'
+format = '[status $status]($style) '
 style = 'bold red'
 
 [gcloud]
-format = '([$symbol$project]($style) )'
+format = '([$symbol$project]($style) ) '
 style = 'bold blue'
 symbol = '☁ '
 
@@ -92,14 +105,14 @@ style = 'blue bold'
 
 [localip]
 disabled = false
-format = '[int](white) [$localipv4]($style) '
+format = '[int](white) [$localipv4]($style)'
 ssh_only = false
-style = '#87d7ff'
+style = '#edff87'
 
 [time]
 disabled = false
 format = '[at](white) [$time]($style)'
-style = '#87d7ff'
+style = '#58b4ff'
 time_format = '%Y-%m-%d %H:%M:%S'
 
 [character]
