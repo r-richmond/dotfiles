@@ -7,8 +7,8 @@ donjayamanne.githistory
 dustinsanders.an-old-hope-theme-vscode
 earshinov.permute-lines
 esbenp.prettier-vscode
+fabiospampinato.vscode-open-in-github
 foxundermoon.shell-format
-github.copilot-chat
 github.vscode-github-actions
 github.vscode-pull-request-github
 hashicorp.hcl
