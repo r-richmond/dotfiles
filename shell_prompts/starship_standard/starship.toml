@@ -1,4 +1,4 @@
-# Inserts blank line between shell prompts.
+# Do not insert a blank line between shell prompts.
 add_newline = false
 # Timeout for commands executed by starship (in milliseconds).
 command_timeout = 800
@@ -31,7 +31,7 @@ style = "bold white"
 
 # File States Configuration
 staged = '[+$count ](blue)'      # Plus with file count
-modified = '[!$count ](yellow)'  # Modifed with file count
+modified = '[!$count ](yellow)'  # Modified with file count
 conflicted = '⚔️[¡$count ](red)' # Sword with file count
 deleted = '[-$count ](red)'      # Trash with file count
 untracked = '[?$count ](cyan)'   # Question mark with file count
@@ -50,10 +50,10 @@ deleted_style = 'bold red'
 disabled = false
 format = '(L[+$added]($added_style))([-$deleted]($deleted_style) )'
 
-[kubernetes]
-disabled = false
-format = '[$symbol$context( \($namespace\))]($style) '
-style = 'bold cyan'
+# [kubernetes]
+# disabled = false
+# format = '[$symbol$context( \($namespace\))]($style) '
+# style = 'bold cyan'
 
 [python]
 detect_extensions = []

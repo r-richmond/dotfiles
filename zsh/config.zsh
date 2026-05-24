@@ -11,6 +11,7 @@ setopt IGNORE_EOF
 setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS   # allow functions to have local traps
 setopt PROMPT_SUBST  # parameter expansion, command substitution and arithmetic expansion are performed in prompts. Substitutions within prompts do not affect the command status.
+setopt TRANSIENT_RPROMPT # remove the right prompt from accepted command lines
 setopt NO_BG_NICE    # don't nice background tasks
 setopt NO_HUP
 setopt NO_LIST_BEEP

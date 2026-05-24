@@ -20,7 +20,6 @@ brew 'numbat' # https://github.com/sharkdp/numbat
 brew 'nushell'
 brew 'ollama'
 # brew 'openjdk' # java
-brew 'powerlevel10k'
 brew 'protobuf'
 brew 'python'
 brew 'ripgrep'
