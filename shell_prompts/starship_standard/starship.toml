@@ -48,7 +48,7 @@ diverged = '[↑$ahead_count↓$behind_count](red) ' # Both icons with counts
 added_style = 'bold green'
 deleted_style = 'bold red'
 disabled = false
-format = '(L[+$added]($added_style))([-$deleted]($deleted_style) )'
+format = '(L([+$added]($added_style))([-$deleted]($deleted_style)) )'
 
 # [kubernetes]
 # disabled = false

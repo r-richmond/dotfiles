@@ -15,27 +15,14 @@ skip_all=false
 
 echo ''
 
-info() {
-  printf "\r  [ \033[00;34m..\033[0m ] %s\n" "$1"
-}
-
-user() {
-  printf "\r  [ \033[0;33m??\033[0m ] %b\n" "$1"
-}
-
-success() {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
-}
-
-fail() {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"
-  echo ''
-  exit 1
-}
-
 if [ ! -d "$DOTFILES" ]; then
-  fail "DOTFILES not found: $DOTFILES"
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "DOTFILES not found: $DOTFILES" >&2
+  echo '' >&2
+  exit 1
 fi
+
+source "$DOTFILES/script/lib/ui"
+source "$DOTFILES/script/lib/symlink"
 
 if [ "$(uname -s)" != "Darwin" ]; then
   fail 'script/bootstrap only supports macOS'
@@ -94,48 +81,6 @@ backup_file() {
   if [ "$print" = "true" ]; then
     success "moved $dst to $backup_path"
   fi
-}
-
-symlink_destination_for() {
-  local src=$1
-  local dst
-
-  dst=$(basename "$src")
-  dst=${dst#symlink}
-
-  if [ -z "$dst" ]; then
-    return 1
-  fi
-
-  dst="$HOME/${dst//+//}"
-
-  if [ "$dst" = "$HOME/" ] || [ "$dst" = "$HOME" ]; then
-    return 1
-  fi
-
-  printf '%s\n' "$dst"
-}
-
-resolve_path() {
-  local path=$1
-
-  (
-    cd "$(dirname "$path")" >/dev/null 2>&1 || exit 1
-    printf '%s/%s\n' "$(pwd -P)" "$(basename "$path")"
-  )
-}
-
-resolve_link_target() {
-  local link_path=$1
-  local target
-
-  target=$(readlink "$link_path") || return 1
-
-  (
-    cd "$(dirname "$link_path")" >/dev/null 2>&1 || exit 1
-    cd "$(dirname "$target")" >/dev/null 2>&1 || exit 1
-    printf '%s/%s\n' "$(pwd -P)" "$(basename "$target")"
-  )
 }
 
 run_dot_installs() {
@@ -285,13 +230,7 @@ link_file() {
   fi
 
   if [ "$skip" != "true" ]; then
-    local parent
-
-    parent=$(dirname "$dst")
-    if [ ! -d "$parent" ]; then
-      mkdir -p "$parent"
-    fi
-    ln -s "$src" "$dst"
+    link_symlink "$src" "$dst"
     success "linked $src to $dst"
   fi
 }
@@ -304,7 +243,7 @@ install_dotfiles() {
   while IFS= read -r -d '' src; do
     dst=$(symlink_destination_for "$src") || fail "invalid symlink source: $src"
     link_file "$src" "$dst"
-  done < <(find "$DOTFILES" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0)
+  done < <(find_symlink_sources)
 }
 
 setup_gitconfig
