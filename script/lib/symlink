@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+symlink_destination_for() {
+  local src=$1
+  local dst
+
+  dst=$(basename "$src")
+  dst=${dst#symlink}
+
+  if [ -z "$dst" ]; then
+    return 1
+  fi
+
+  dst="$HOME/${dst//+//}"
+
+  if [ "$dst" = "$HOME/" ] || [ "$dst" = "$HOME" ]; then
+    return 1
+  fi
+
+  printf '%s\n' "$dst"
+}
+
+resolve_path() {
+  local path=$1
+
+  (
+    cd "$(dirname "$path")" >/dev/null 2>&1 || exit 1
+    printf '%s/%s\n' "$(pwd -P)" "$(basename "$path")"
+  )
+}
+
+resolve_link_target() {
+  local link_path=$1
+  local target
+
+  target=$(readlink "$link_path") || return 1
+
+  (
+    cd "$(dirname "$link_path")" >/dev/null 2>&1 || exit 1
+    cd "$(dirname "$target")" >/dev/null 2>&1 || exit 1
+    printf '%s/%s\n' "$(pwd -P)" "$(basename "$target")"
+  )
+}
+
+find_symlink_sources() {
+  find "$DOTFILES" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0
+}
+
+link_symlink() {
+  local src=$1 dst=$2 parent
+
+  parent=$(dirname "$dst")
+  mkdir -p "$parent"
+  ln -s "$src" "$dst"
+}

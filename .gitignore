@@ -1,6 +1,7 @@
 git/symlink.gitconfig.local
 macos/defaults-macos-personal.sh
 nushell/history.txt
+backup-moved/
 # added by github-copilot
 github-copilot
 k9s/screen-dumps

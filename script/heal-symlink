@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+
+set -e
+
+DOTFILES="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)}"
+export DOTFILES
+
+if [ ! -d "$DOTFILES" ]; then
+  printf 'DOTFILES not found: %s\n' "$DOTFILES" >&2
+  exit 1
+fi
+
+source "$DOTFILES/script/lib/ui"
+source "$DOTFILES/script/lib/symlink"
+
+replace_with_link() {
+  local src=$1 dst=$2
+
+  rm -f "$dst"
+  link_symlink "$src" "$dst"
+  success "linked $src to $dst"
+}
+
+move_to_backup_and_link() {
+  local src=$1 dst=$2 backup_root backup_path backup_dir
+
+  backup_root="$HOME/.dotfiles/backup-moved"
+  backup_path="$backup_root/${dst#"$HOME"/}"
+  backup_dir=$(dirname "$backup_path")
+
+  mkdir -p "$backup_dir"
+
+  if [ -e "$backup_path" ] || [ -L "$backup_path" ]; then
+    backup_path="$backup_path.$(date +%Y%m%d%H%M%S)"
+  fi
+
+  mv "$dst" "$backup_path"
+  success "moved $dst to $backup_path"
+  link_symlink "$src" "$dst"
+  success "linked $src to $dst"
+}
+
+print_file() {
+  local file=$1
+
+  printf '\n%s\n' "----- $file -----"
+  cat "$file"
+  printf '\n%s\n\n' "----- end $file -----"
+}
+
+handle_missing_link() {
+  local src=$1 dst=$2 action
+
+  if [ -L "$dst" ]; then
+    success "already linked $dst"
+    return 0
+  fi
+
+  if [ ! -e "$dst" ]; then
+    link_symlink "$src" "$dst"
+    success "linked $src to $dst"
+    return 0
+  fi
+
+  if [ ! -f "$dst" ]; then
+    user "Destination exists but is not a regular file: $dst ($(basename "$src")); skipping"
+    return 0
+  fi
+
+  if cmp -s "$src" "$dst"; then
+    info "destination matches $src; replacing with symlink"
+    replace_with_link "$src" "$dst"
+    return 0
+  fi
+
+  while true; do
+    user "File differs from managed symlink source: $dst ($(basename "$src")), what do you want to do?\n\
+          [s]kip, [p]rint file contents, [r]eplace with symlink after printing, [m]ove to backup then symlink?"
+
+    if ! read -r -n 1 -u 3 action; then
+      echo ''
+      fail "unable to read a response for $dst"
+    fi
+
+    echo ''
+
+    case "$action" in
+    s)
+      success "skipped $src"
+      return 0
+      ;;
+    p)
+      print_file "$dst"
+      ;;
+    r)
+      print_file "$dst"
+      replace_with_link "$src" "$dst"
+      return 0
+      ;;
+    m)
+      move_to_backup_and_link "$src" "$dst"
+      return 0
+      ;;
+    *)
+      user "invalid choice: $action"
+      ;;
+    esac
+  done
+}
+
+test_output=$("$DOTFILES/script/test-symlink" 2>&1 || true)
+missing_lines=$(printf '%s\n' "$test_output" | grep '^MISSING  ' || true)
+
+if [ -z "$missing_lines" ]; then
+  success 'no missing symlinks to heal'
+  exit 0
+fi
+
+exec 3<&0
+
+while IFS= read -r line; do
+  [ -n "$line" ] || continue
+
+  src=${line#MISSING  }
+  dst=${src#* -> }
+  src=${src%% -> *}
+
+  if [ -z "$src" ] || [ -z "$dst" ] || [ "$src" = "$dst" ]; then
+    fail "unable to parse test-symlink output: $line"
+  fi
+
+  handle_missing_link "$src" "$dst"
+done < <(printf '%s\n' "$missing_lines")
+
+exec 3<&-
+
+"$DOTFILES/script/test-symlink"
