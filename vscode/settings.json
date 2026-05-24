@@ -65,7 +65,7 @@
   "terminal.explorerKind": "external",
   "terminal.integrated.shellIntegration.history": 10000,
   "terminal.integrated.scrollback": 100000,
-  "editor.fontFamily": "'MesloLGS NF', 'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "editor.codeLensFontFamily": "'Hack Nerd Font Mono', 'Hack Nerd Font', Menlo, Monaco, 'Courier New', monospace",
   "github.copilot.editor.enableAutoCompletions": true,
   "[html]": {
