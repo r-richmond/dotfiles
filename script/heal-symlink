@@ -24,7 +24,7 @@ replace_with_link() {
 move_to_backup_and_link() {
   local src=$1 dst=$2 backup_root backup_path backup_dir
 
-  backup_root="$HOME/.dotfiles/backup-moved"
+  backup_root="${DOTFILES:-$HOME/.dotfiles}/backup-moved"
   backup_path="$backup_root/${dst#"$HOME"/}"
   backup_dir=$(dirname "$backup_path")
 
