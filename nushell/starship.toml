@@ -26,7 +26,7 @@ symbol = ''                                                       # Branch sy
 
 [git_status]
 # The format string ensures all requested states and stash counts are displayed
-format = '[$ahead_behind](bold cyan)[($stashed )]($style)([\[$staged$modified$conflicted$deleted$untracked\]]($style) )'
+format = '[$ahead_behind](bold cyan)[($stashed )]($style)([\[ $staged$modified$conflicted$deleted$untracked\]]($style) )'
 style = "bold white"
 
 # File States Configuration
