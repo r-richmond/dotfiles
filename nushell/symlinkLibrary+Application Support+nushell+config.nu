@@ -6,3 +6,6 @@ const prompt_config = ($config_dir | path join prompt.nu)
 source $history_config
 source $hotkeys_config
 source $prompt_config
+
+# General settings
+$env.config.show_banner = false

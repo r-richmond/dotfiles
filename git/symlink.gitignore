@@ -16,3 +16,6 @@ Thumbs.db
 
 # pycharm
 .idea/
+
+# ruff
+.ruff_cache/

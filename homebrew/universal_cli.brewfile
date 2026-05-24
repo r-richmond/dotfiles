@@ -1,7 +1,8 @@
 brew 'bat'
 brew 'diff-so-fancy' # https://github.com/so-fancy/diff-so-fancy
+brew 'duckdb' # https://duckdb.org/ - SQL database for analytics
 brew 'fd' # find alternative
-brew 'fzf'
+brew 'fzf' # https://junegunn.github.io/fzf/
 brew 'gh' # GitHub CLI
 brew 'git'
 brew 'git-extras' # https://github.com/tj/git-extras
@@ -9,20 +10,22 @@ brew 'git-lfs'
 brew 'git-open' # https://github.com/jeffreyiacono/git-open
 brew 'gnu-sed'
 brew 'grep'
-brew 'helm'
-brew 'hugo' # https://gohugo.io
+brew 'helm' # https://helm.sh/
 brew 'ispell' # spell checker for nano
-brew 'lsd'
+brew 'lsd' # https://github.com/lsd-rs/lsd
 brew 'nano'
 brew 'nmap' # port tool
 brew 'node'
 brew 'numbat' # https://github.com/sharkdp/numbat
 brew 'nushell'
+brew 'ollama'
 # brew 'openjdk' # java
 brew 'powerlevel10k'
+brew 'protobuf'
 brew 'python'
 brew 'ripgrep'
 brew 'shellcheck' # https://github.com/koalaman/shellcheck
+brew 'starship' # https://starship.rs/
 brew 'trash'
 brew 'tree'
 brew 'uv'
