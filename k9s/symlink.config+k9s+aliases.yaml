@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/derailed/k9s/refs/heads/master/internal/config/json/schemas/aliases.json
 aliases:
   dp: deployments
   sec: v1/secrets

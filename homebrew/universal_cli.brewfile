@@ -12,6 +12,7 @@ brew 'gnu-sed'
 brew 'grep'
 brew 'helm' # https://helm.sh/
 brew 'ispell' # spell checker for nano
+brew 'k9s' # https://k9scli.io/ - Kubernetes CLI
 brew 'lsd' # https://github.com/lsd-rs/lsd
 brew 'nano' # https://www.nano-editor.org/ - terminal text editor
 brew 'nmap' # https://nmap.org/ - port tool

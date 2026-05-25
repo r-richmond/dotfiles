@@ -1,7 +1,3 @@
-# Compiled Python files
-*.pyc
-.mypy_cache/
-
 # Folder view configuration files
 .DS_Store
 Desktop.ini
@@ -17,5 +13,10 @@ Thumbs.db
 # pycharm
 .idea/
 
-# ruff
+# Python stuff
 .ruff_cache/
+.venv/
+*.pyc
+.mypy_cache/
+.pytest_cache/
+__pycache__/

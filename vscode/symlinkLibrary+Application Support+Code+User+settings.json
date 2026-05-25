@@ -1,4 +1,5 @@
 {
+  "$schema": "vscode://schemas/settings/user",
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-containers",
   },
@@ -31,8 +32,6 @@
   "terminal.integrated.defaultProfile.osx": "zsh",
   "workbench.colorTheme": "An Old Hope Classic",
   "workbench.iconTheme": "material-icon-theme",
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "editor.suggestSelection": "first",
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "workbench.editorAssociations": {

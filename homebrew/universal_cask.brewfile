@@ -1,4 +1,5 @@
 cask 'alfred' # https://www.alfredapp.com/ - Productivity
+cask 'copilot-cli' # https://github.com/features/copilot/cli - GitHub Copilot CLI
 # cask 'cyberduck' #  https://cyberduck.io/ - Remote file access
 cask 'dash@6' # https://kapeli.com/dash - Documentation
 cask 'docker-desktop' # https://www.docker.com/products/docker-desktop
