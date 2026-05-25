@@ -1,4 +1,5 @@
 brew 'bat' # https://github.com/sharkdp/bat - cat alternative with syntax highlighting
+brew 'copilot-cli' # https://github.com/features/copilot/cli - GitHub Copilot CLI
 brew 'diff-so-fancy' # https://github.com/so-fancy/diff-so-fancy
 brew 'duckdb' # https://duckdb.org/ - SQL database for analytics
 brew 'fd' # https://github.com/sharkdp/fd - find alternative
