@@ -1,7 +1,7 @@
 ---
 name: heal-symlink
-description: 'Heal missing or broken dotfiles symlinks by running the repo repair flow. Use when test-symlink reports BROKEN or MISSING for managed targets that should be restored.'
-argument-hint: 'No arguments required'
+description: "Heal missing or broken dotfiles symlinks by running the repo repair flow. Use when test-symlink reports BROKEN or MISSING for managed targets that should be restored."
+argument-hint: "No arguments required"
 ---
 
 # Heal Symlink

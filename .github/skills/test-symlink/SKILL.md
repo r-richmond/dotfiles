@@ -1,7 +1,7 @@
 ---
 name: test-symlink
-description: 'Validate all intended dotfiles symlink targets. Use when checking that every managed symlink exists and points to the expected source, especially after bootstrap, after adding a new symlink* file, or after moving dotfiles.'
-argument-hint: 'No arguments required'
+description: "Validate all intended dotfiles symlink targets. Use when checking that every managed symlink exists and points to the expected source, especially after bootstrap, after adding a new symlink* file, or after moving dotfiles."
+argument-hint: "No arguments required"
 ---
 
 # Test Symlink
