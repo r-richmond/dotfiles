@@ -1,0 +1,530 @@
+#!/opt/homebrew/bin/zsh
+#
+# Usage: brew-extension <option> [--category <category>] [--type <cli|cask>]
+#
+# 'backup : Backs up installed Homebrew items to $DOTFILES/homebrew/*_*.brewfile'
+# 'help : List available commands'
+# 'install-all : Installs Homebrew items listed in brewfiles'
+# 'install-missing : Installs missing Homebrew items listed in brewfiles'
+# 'list : Lists all installed top-level Homebrew items'
+# 'list-missing : Lists Homebrew items saved in brewfiles but not installed'
+# 'list-new : Lists installed Homebrew items not saved to brewfiles'
+# 'remove-new : Removes installed Homebrew items not saved to brewfiles'
+# 'task : Installs universal brewfiles and prompts for optional categories'
+#
+brew-extension () {
+  local dotfiles_root
+  local script_path
+  local exit_code
+
+  dotfiles_root="${DOTFILES:-$(cd "$(dirname "${BASH_SOURCE[0]:-${(%):-%x}}")/.." && pwd -P)}"
+  script_path=$(mktemp "${TMPDIR:-/tmp}/brew-extension.XXXXXX") || return
+
+  cat > "$script_path" <<'BREW_EXTENSION_SCRIPT'
+set -euo pipefail
+
+DOTFILES="${DOTFILES:?DOTFILES must be set}"
+BREWFILES_DIR="$DOTFILES/homebrew"
+
+usage() {
+  cat <<'USAGE'
+Usage: brew-extension <option> [--category <category>] [--type <cli|cask>]
+
+Commands:
+  backup          Back up installed Homebrew items to brewfiles
+  help            Print this command
+  install-all     Install Homebrew items listed in brewfiles
+  install-missing Install missing Homebrew items listed in brewfiles
+  list            List installed top-level Homebrew items
+  list-missing    List saved Homebrew items that are not installed
+  list-new        List installed Homebrew items not saved to brewfiles
+  remove-new      Remove installed Homebrew items not saved to brewfiles
+  task            Install universal brewfiles and prompt for optional categories
+
+Options:
+  --category <category>  Limit to a brewfile category, such as universal or fonts
+  --type <cli|cask>     Limit to cli packages or casks
+USAGE
+}
+
+die() {
+  echo "$*" >&2
+  exit 1
+}
+
+ensure_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  elif [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+
+  command -v brew >/dev/null 2>&1
+}
+
+is_macos() {
+  [ "$(uname -s)" = "Darwin" ]
+}
+
+brewfile_category() {
+  local basename
+  basename=$(basename "$1")
+  basename=${basename%_cli.brewfile}
+  basename=${basename%_cask.brewfile}
+  printf '%s\n' "$basename"
+}
+
+brewfile_type() {
+  case "$(basename "$1")" in
+    *_cli.brewfile) printf 'cli\n' ;;
+    *_cask.brewfile) printf 'cask\n' ;;
+    *) return 1 ;;
+  esac
+}
+
+brewfile_directive() {
+  case "$1" in
+    cli) printf 'brew\n' ;;
+    cask) printf 'cask\n' ;;
+    *) return 1 ;;
+  esac
+}
+
+brewfile_for() {
+  printf '%s/%s_%s.brewfile\n' "$BREWFILES_DIR" "$1" "$2"
+}
+
+list_brewfiles_for_type() {
+  local kind=$1 category_filter=$2 universal_file file category
+
+  if [ -n "$category_filter" ]; then
+    file=$(brewfile_for "$category_filter" "$kind")
+    [ -f "$file" ] && printf '%s\n' "$file"
+    return 0
+  fi
+
+  universal_file=$(brewfile_for universal "$kind")
+  [ -f "$universal_file" ] && printf '%s\n' "$universal_file"
+
+  find "$BREWFILES_DIR" -maxdepth 1 -type f -name "*_${kind}.brewfile" -print | sort | while IFS= read -r file; do
+    category=$(brewfile_category "$file")
+    [ "$category" = universal ] && continue
+    printf '%s\n' "$file"
+  done
+}
+
+list_brewfiles() {
+  local category_filter=$1 type_filter=$2 kind
+  for kind in cli cask; do
+    [ -n "$type_filter" ] && [ "$type_filter" != "$kind" ] && continue
+    list_brewfiles_for_type "$kind" "$category_filter"
+  done
+}
+
+installed_items() {
+  local kind=$1
+  ensure_brew || die 'brew command not found'
+
+  case "$kind" in
+    cli) brew leaves | sort -f ;;
+    cask)
+      if is_macos; then
+        brew list --cask | sort -f
+      fi
+      ;;
+    *) die "Unknown type: $kind" ;;
+  esac
+}
+
+saved_items() {
+  local include_commented=$1 category_filter=$2 type_filter=$3 file kind category directive
+
+  list_brewfiles "$category_filter" "$type_filter" | while IFS= read -r file; do
+    kind=$(brewfile_type "$file")
+    category=$(brewfile_category "$file")
+    directive=$(brewfile_directive "$kind")
+
+    INCLUDE_COMMENTED="$include_commented" KIND="$kind" CATEGORY="$category" DIRECTIVE="$directive" perl - "$file" <<'PERL_SAVED_ITEMS'
+use strict;
+use warnings;
+
+my ($file) = @ARGV;
+my $include_commented = $ENV{INCLUDE_COMMENTED} eq 'true';
+my $kind = $ENV{KIND};
+my $category = $ENV{CATEGORY};
+my $directive = $ENV{DIRECTIVE};
+
+open my $in, '<', $file or die "Unable to read $file: $!\n";
+while (my $line = <$in>) {
+  chomp $line;
+  next unless $line =~ /^\s*(#\s*)?\Q$directive\E\s+['"]([^'"]+)['"](.*)$/;
+  next if defined $1 && !$include_commented;
+
+  my $item = $2;
+  my $rest = $3;
+  my $comment = '';
+  if ($rest =~ /(?:^|\s)#\s?(.*)$/) {
+    $comment = $1;
+    $comment =~ s/^\s+|\s+$//g;
+    $comment =~ s/\t/ /g;
+  }
+
+  print join("\t", $kind, $category, $item, $comment), "\n";
+}
+close $in;
+PERL_SAVED_ITEMS
+  done | sort -f -k1,1 -k3,3
+}
+
+format_list() {
+  awk -F '\t' '
+    BEGIN {
+      type_width = length("type")
+      category_width = length("category")
+      name_width = length("name")
+    }
+    {
+      row_count++
+      type[row_count] = $1
+      category[row_count] = $2
+      name[row_count] = $3
+      comment[row_count] = $4
+
+      if (length($1) > type_width) type_width = length($1)
+      if (length($2) > category_width) category_width = length($2)
+      if (length($3) > name_width) name_width = length($3)
+    }
+    END {
+      printf "%-*s  %-*s  %-*s  %s\n", type_width, "type", category_width, "category", name_width, "name", "comment"
+      for (row = 1; row <= row_count; row++) {
+        printf "%-*s  %-*s  %-*s  %s\n", type_width, type[row], category_width, category[row], name_width, name[row], comment[row]
+      }
+    }
+  '
+}
+
+item_metadata_from_saved() {
+  local saved_file=$1 item=$2 metadata
+  metadata=$(awk -F '\t' -v item="$item" '
+    $3 == item && $2 != "universal" { print $2 FS $4; found = 1; exit }
+    $3 == item && $2 == "universal" { universal_category = $2; universal_comment = $4 }
+    END { if (!found && universal_category != "") print universal_category FS universal_comment }
+  ' "$saved_file")
+  if [ -n "$metadata" ]; then
+    printf '%s\n' "$metadata"
+  else
+    printf 'universal\t\n'
+  fi
+}
+
+list_installed() {
+  local type_filter=$1 tempdir kind item saved_file category comment
+  tempdir=$(mktemp -d)
+  BREW_EXTENSION_TEMP_DIR=$tempdir
+  trap 'rm -rf "$BREW_EXTENSION_TEMP_DIR"' EXIT
+
+  for kind in cli cask; do
+    [ -n "$type_filter" ] && [ "$type_filter" != "$kind" ] && continue
+    saved_file="$tempdir/saved_$kind"
+    saved_items true '' "$kind" > "$saved_file"
+    installed_items "$kind" | while IFS= read -r item; do
+      IFS=$'\t' read -r category comment < <(item_metadata_from_saved "$saved_file" "$item")
+      printf '%s\t%s\t%s\t%s\n' "$kind" "$category" "$item" "$comment"
+    done
+  done
+}
+
+list_missing() {
+  local category_filter=$1 type_filter=$2 tempdir kind saved installed item category comment
+  tempdir=$(mktemp -d)
+  BREW_EXTENSION_TEMP_DIR=$tempdir
+  trap 'rm -rf "$BREW_EXTENSION_TEMP_DIR"' EXIT
+
+  for kind in cli cask; do
+    [ -n "$type_filter" ] && [ "$type_filter" != "$kind" ] && continue
+    installed_items "$kind" > "$tempdir/installed_$kind"
+  done
+
+  saved_items false "$category_filter" "$type_filter" | while IFS=$'\t' read -r kind category item comment; do
+    installed="$tempdir/installed_$kind"
+    if ! grep -F -x -q -- "$item" "$installed"; then
+      printf '%s\t%s\t%s\t%s\n' "$kind" "$category" "$item" "$comment"
+    fi
+  done
+}
+
+list_new() {
+  local category_filter=$1 type_filter=$2 tempdir kind item saved_file
+  tempdir=$(mktemp -d)
+  BREW_EXTENSION_TEMP_DIR=$tempdir
+  trap 'rm -rf "$BREW_EXTENSION_TEMP_DIR"' EXIT
+
+  for kind in cli cask; do
+    [ -n "$type_filter" ] && [ "$type_filter" != "$kind" ] && continue
+    saved_file="$tempdir/saved_$kind"
+    saved_items true "$category_filter" "$kind" | cut -f3 | sort -f -u > "$saved_file"
+    installed_items "$kind" | while IFS= read -r item; do
+      if ! grep -F -x -q -- "$item" "$saved_file"; then
+        printf '%s\tuniversal\t%s\t\n' "$kind" "$item"
+      fi
+    done
+  done
+}
+
+install_brewfile() {
+  local file=$1 kind category
+  kind=$(brewfile_type "$file")
+  category=$(brewfile_category "$file")
+
+  if [ "$kind" = cask ] && ! is_macos; then
+    echo "Skipping $category casks on non-macOS"
+    return 0
+  fi
+
+  echo "Installing $category $kind items..."
+  brew bundle --file="$file"
+}
+
+install_brewfiles() {
+  local category_filter=$1 type_filter=$2 file found=false
+  ensure_brew || die 'brew command not found'
+
+  while IFS= read -r file; do
+    found=true
+    install_brewfile "$file"
+  done < <(list_brewfiles "$category_filter" "$type_filter")
+
+  if [ "$found" = false ]; then
+    if [ -n "$category_filter" ] || [ -n "$type_filter" ]; then
+      echo 'No matching brewfiles found'
+    else
+      echo 'No brewfiles found'
+    fi
+  fi
+}
+
+remove_new() {
+  local category_filter=$1 type_filter=$2 found=false kind category item comment
+  ensure_brew || die 'brew command not found'
+
+  while IFS=$'\t' read -r kind category item comment; do
+    found=true
+    case "$kind" in
+      cli) brew uninstall "$item" ;;
+      cask) brew uninstall --cask "$item" ;;
+    esac
+  done < <(list_new "$category_filter" "$type_filter")
+
+  if [ "$found" = false ]; then
+    echo 'There were no new Homebrew items detected'
+  fi
+}
+
+backup_items() {
+  local category_filter=$1 type_filter=$2
+  ensure_brew || die 'brew command not found'
+
+  CATEGORY_FILTER="$category_filter" TYPE_FILTER="$type_filter" perl <<'PERL_BACKUP'
+use strict;
+use warnings;
+use File::Basename qw(basename);
+
+my $dotfiles = $ENV{DOTFILES};
+my $dir = "$dotfiles/homebrew";
+my $category_filter = $ENV{CATEGORY_FILTER} // '';
+my $type_filter = $ENV{TYPE_FILTER} // '';
+my @types = $type_filter ? ($type_filter) : qw(cli cask);
+
+sub category_for {
+  my ($file) = @_;
+  my $base = basename($file);
+  $base =~ s/_(?:cli|cask)\.brewfile\z//;
+  return $base;
+}
+
+sub directive_for {
+  my ($type) = @_;
+  return $type eq 'cli' ? 'brew' : 'cask';
+}
+
+sub installed_for {
+  my ($type) = @_;
+  my $command = $type eq 'cli' ? 'brew leaves' : 'brew list --cask';
+  my @items = map { chomp; $_ } `$command`;
+  return map { $_ => 1 } grep { length } @items;
+}
+
+for my $type (@types) {
+  my $directive = directive_for($type);
+  my @files = sort glob("$dir/*_${type}.brewfile");
+  @files = grep { category_for($_) eq $category_filter } @files if $category_filter ne '';
+  next unless @files;
+
+  my %installed = installed_for($type);
+  my %entries_by_file;
+  my %headers_by_file;
+  my %entries_by_item_file;
+  my %known_files_by_item;
+
+  for my $file (@files) {
+    open my $in, '<', $file or die "Unable to read $file: $!\n";
+    while (my $line = <$in>) {
+      chomp $line;
+      if ($line =~ /^\s*(#\s*)?\Q$directive\E\s+['"]([^'"]+)['"]/) {
+        my $commented = defined $1 ? 1 : 0;
+        my $item = $2;
+        my $entry = { item => $item, line => $line, commented => $commented, file => $file };
+        push @{ $entries_by_file{$file} }, $entry;
+        push @{ $entries_by_item_file{"$item\0$file"} }, $entry;
+        push @{ $known_files_by_item{$item} }, $file;
+      } elsif ($line =~ /\S/) {
+        push @{ $headers_by_file{$file} }, $line;
+      }
+    }
+    close $in;
+  }
+
+  my %assignment;
+  for my $item (sort keys %installed) {
+    my @known_files = @{ $known_files_by_item{$item} // [] };
+    my ($non_universal) = grep { category_for($_) ne 'universal' } @known_files;
+    my ($universal) = grep { category_for($_) eq 'universal' } @known_files;
+    $assignment{$item} = $non_universal || $universal || "$dir/universal_${type}.brewfile";
+  }
+
+  for my $file (@files) {
+    my %records;
+    my %seen;
+
+    for my $entry (@{ $entries_by_file{$file} // [] }) {
+      my $item = $entry->{item};
+      next if $seen{$item}++;
+      if ($entry->{commented}) {
+        $records{$item} = $entry->{line};
+      } elsif ($installed{$item} && ($assignment{$item} // '') eq $file) {
+        $records{$item} = $entry->{line};
+      }
+    }
+
+    for my $item (sort keys %installed) {
+      next unless ($assignment{$item} // '') eq $file;
+      next if exists $records{$item};
+      my @existing = @{ $entries_by_item_file{"$item\0$file"} // [] };
+      my ($active) = grep { !$_->{commented} } @existing;
+      $records{$item} = $active ? $active->{line} : "$directive '$item'";
+    }
+
+    open my $out, '>', $file or die "Unable to write $file: $!\n";
+    my @headers = @{ $headers_by_file{$file} // [] };
+    if (@headers) {
+      print {$out} join("\n", @headers), "\n";
+      print {$out} "\n" if keys %records;
+    }
+    for my $item (sort { lc($a) cmp lc($b) || $a cmp $b } keys %records) {
+      print {$out} $records{$item}, "\n";
+    }
+    close $out;
+  }
+}
+PERL_BACKUP
+}
+
+run_task() {
+  local file category kind answer
+  ensure_brew || die 'brew command not found'
+
+  install_brewfiles universal cli
+  if is_macos; then
+    install_brewfiles universal cask
+  fi
+
+  exec 3<&0
+  while IFS= read -r file; do
+    category=$(brewfile_category "$file")
+    kind=$(brewfile_type "$file")
+    [ "$category" = universal ] && continue
+    if [ "$kind" = cask ] && ! is_macos; then
+      continue
+    fi
+
+    printf ' - Install %s %s items? (y/n) ' "$category" "$kind"
+    read -r answer <&3
+    echo ''
+    if [ "$answer" != "${answer#[Yy]}" ]; then
+      install_brewfile "$file"
+    fi
+  done < <(list_brewfiles '' '')
+  exec 3<&-
+}
+
+command=${1:-help}
+[ $# -gt 0 ] && shift
+category_filter=''
+type_filter=''
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --category)
+      [ $# -gt 1 ] || die '--category requires a value'
+      category_filter=$2
+      shift 2
+      ;;
+    --category=*)
+      category_filter=${1#--category=}
+      shift
+      ;;
+    --type)
+      [ $# -gt 1 ] || die '--type requires a value'
+      type_filter=$2
+      shift 2
+      ;;
+    --type=*)
+      type_filter=${1#--type=}
+      shift
+      ;;
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    *) die "Unknown option: $1" ;;
+  esac
+done
+
+case "$type_filter" in
+  ''|cli|cask) ;;
+  *) die "Unknown type: $type_filter" ;;
+esac
+
+case "$command" in
+  install-missing|install-all|list-missing) ;;
+  *)
+    if [ -n "$category_filter" ]; then
+      die "--category is only supported for install-all, install-missing, and list-missing"
+    fi
+    ;;
+esac
+
+case "$command" in
+  backup) backup_items "$category_filter" "$type_filter" ;;
+  help) usage ;;
+  install-missing|install-all) install_brewfiles "$category_filter" "$type_filter" ;;
+  list) list_installed "$type_filter" | format_list ;;
+  list-missing) list_missing "$category_filter" "$type_filter" | format_list ;;
+  list-new) list_new "$category_filter" "$type_filter" | format_list ;;
+  remove-new) remove_new "$category_filter" "$type_filter" ;;
+  task) run_task ;;
+  *) die 'Please pass a valid option' ;;
+esac
+BREW_EXTENSION_SCRIPT
+
+  DOTFILES="$dotfiles_root" bash "$script_path" "$@"
+  exit_code=$?
+  rm -f "$script_path"
+  return "$exit_code"
+}

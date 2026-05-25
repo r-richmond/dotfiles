@@ -1,37 +1,31 @@
-brew 'bat'
+brew 'bat' # https://github.com/sharkdp/bat - cat alternative with syntax highlighting
 brew 'diff-so-fancy' # https://github.com/so-fancy/diff-so-fancy
 brew 'duckdb' # https://duckdb.org/ - SQL database for analytics
-brew 'fd' # find alternative
-brew 'fzf' # https://junegunn.github.io/fzf/
-brew 'gh' # GitHub CLI
+brew 'fd' # https://github.com/sharkdp/fd - find alternative
+brew 'fzf' # https://junegunn.github.io/fzf/ - command-line fuzzy finder
+brew 'gh' # https://cli.github.com/ - GitHub CLI
 brew 'git'
 brew 'git-extras' # https://github.com/tj/git-extras
-brew 'git-lfs'
+brew 'git-lfs' # https://git-lfs.github.com/ - Git Large File Storage
 brew 'git-open' # https://github.com/jeffreyiacono/git-open
 brew 'gnu-sed'
 brew 'grep'
 brew 'helm' # https://helm.sh/
 brew 'ispell' # spell checker for nano
 brew 'lsd' # https://github.com/lsd-rs/lsd
-brew 'nano'
-brew 'nmap' # port tool
+brew 'nano' # https://www.nano-editor.org/ - terminal text editor
+brew 'nmap' # https://nmap.org/ - port tool
 brew 'node'
-brew 'numbat' # https://github.com/sharkdp/numbat
-brew 'nushell'
-brew 'ollama'
+brew 'nushell' # https://www.nushell.sh/ - modern shell
+brew 'ollama' # https://ollama.com/ - local LLMs
 # brew 'openjdk' # java
-brew 'protobuf'
-brew 'python'
-brew 'ripgrep'
+brew 'protobuf' # https://protobuf.dev/
+brew 'ripgrep' # https://github.com/BurntSushi/ripgrep - line-oriented search tool
 brew 'shellcheck' # https://github.com/koalaman/shellcheck
 brew 'starship' # https://starship.rs/
-brew 'trash'
-brew 'tree'
-brew 'uv'
-brew 'zsh'
-brew 'zsh-autosuggestions'
-brew 'zsh-completions'
-brew 'zsh-syntax-highlighting'
-
-# Note: zsh completition scripts installed here
-# /usr/local/share/zsh/site-functions
+brew 'trash' # https://github.com/ali-rantakari/trash - safe rm alternative
+brew 'uv' # https://docs.astral.sh/uv/ - Python version manager
+brew 'zsh' # https://www.zsh.org/ - shell
+brew 'zsh-autosuggestions' # https://github.com/zsh-users/zsh-autosuggestions
+brew 'zsh-completions' # https://github.com/zsh-users/zsh-completions
+brew 'zsh-syntax-highlighting' # https://github.com/zsh-users/zsh-syntax-highlighting
