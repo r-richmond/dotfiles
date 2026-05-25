@@ -48,11 +48,17 @@ print_file() {
   printf '\n%s\n\n' "----- end $file -----"
 }
 
-handle_missing_link() {
+handle_link_issue() {
   local src=$1 dst=$2 action
 
   if [ -L "$dst" ]; then
-    success "already linked $dst"
+    if [ -e "$dst" ]; then
+      success "already linked $dst"
+      return 0
+    fi
+
+    info "destination is a broken symlink; replacing it"
+    replace_with_link "$src" "$dst"
     return 0
   fi
 
@@ -109,10 +115,10 @@ handle_missing_link() {
 }
 
 test_output=$("$DOTFILES/script/test-symlink" 2>&1 || true)
-missing_lines=$(printf '%s\n' "$test_output" | grep '^MISSING  ' || true)
+issue_lines=$(printf '%s\n' "$test_output" | grep -E '^(MISSING|BROKEN)[[:space:]]+' || true)
 
-if [ -z "$missing_lines" ]; then
-  success 'no missing symlinks to heal'
+if [ -z "$issue_lines" ]; then
+  success 'no missing or broken symlinks to heal'
   exit 0
 fi
 
@@ -121,16 +127,24 @@ exec 3<&0
 while IFS= read -r line; do
   [ -n "$line" ] || continue
 
-  src=${line#MISSING  }
+  if [ "${line#MISSING  }" != "$line" ]; then
+    src=${line#MISSING  }
+  elif [ "${line#BROKEN   }" != "$line" ]; then
+    src=${line#BROKEN   }
+  else
+    fail "unsupported test-symlink output: $line"
+  fi
+
   dst=${src#* -> }
+  dst=${dst%% (actual: *}
   src=${src%% -> *}
 
   if [ -z "$src" ] || [ -z "$dst" ] || [ "$src" = "$dst" ]; then
     fail "unable to parse test-symlink output: $line"
   fi
 
-  handle_missing_link "$src" "$dst"
-done < <(printf '%s\n' "$missing_lines")
+  handle_link_issue "$src" "$dst"
+done < <(printf '%s\n' "$issue_lines")
 
 exec 3<&-
 

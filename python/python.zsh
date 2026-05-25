@@ -10,4 +10,3 @@ if [ -f "/Users/$USER/PycharmProjects/airflow/dev/breeze/autocomplete/breeze-com
   source "/Users/$USER/PycharmProjects/airflow/dev/breeze/autocomplete/breeze-complete-zsh.sh"
   # END: Added by Updated Airflow Breeze autocomplete setup
 fi
-
