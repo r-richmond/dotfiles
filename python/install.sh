@@ -9,4 +9,4 @@ fi
 
 # avoid --user https://docs.brew.sh/Homebrew-and-Python
 uv tool install --upgrade ruff
-uv tool install --upgrade pre-commit
+uv tool install --upgrade prek
