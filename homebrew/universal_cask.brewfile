@@ -1,6 +1,7 @@
 cask 'alfred'
 # cask 'cyberduck' # remote file access
 cask 'dash@6' # Documentation
+cask 'docker-desktop'
 cask 'firefox'
 cask 'ghostty'
 # cask 'google-cloud-sdk' # google cli
@@ -8,4 +9,7 @@ cask 'ghostty'
 cask 'licecap' # Screenrecording software
 # cask 'raycast'
 cask 'rectangle' # Window manager
+cask 'slack' # Communication
+cask 'stats' # System monitor
 cask 'visual-studio-code' # Text Editor
+cask 'zed' # Text Editor
