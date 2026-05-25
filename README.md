@@ -51,6 +51,7 @@ This repo uses the source filename to determine the destination path.
 
 - `zsh/symlink.zshrc` becomes `~/.zshrc`
 - `vscode/symlink.vscode+argv.json` becomes `~/.vscode/argv.json`
+- `vscode/symlinkLibrary+Application Support+Code+User+settings.json` becomes `~/Library/Application Support/Code/User/settings.json`
 
 Run `script/bootstrap` to create the managed symlinks, and run
 `script/test-symlink` to verify that they still point to the expected files.
