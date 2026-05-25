@@ -1,4 +1,4 @@
-# holman does dotfiles
+# ~holman~ richmond does dotfiles
 
 Your dotfiles are how you personalize your system. These are mine.
 
@@ -69,14 +69,11 @@ This will symlink the appropriate files in `.dotfiles` to your home directory.
 Everything is configured and tweaked within `~/.dotfiles`.
 
 To validate that the expected symlinks are present and pointing at the right
-files, run `script/test-symlink`.
+files, run `script/test-symlink`. Subsequently, if you add new `symlink*`
+files you can run `script/heal-symlink` to automatically restore missing or broken symlinks.
 
 The main file you'll want to change right off the bat is `zsh/symlink.zshrc`,
 which sets up a few paths that'll be different on your particular machine.
-
-`dot` is the entry point for running the repo's installer flow. It calls
-`script/install`, which in turn runs the topic-specific `install.sh` scripts.
-You can find `dot` in `bin/`.
 
 ## bugs
 
@@ -85,9 +82,8 @@ work for you even though you may not have `something` installed, for example. Th
 said, I do use this as _my_ dotfiles, so there's a good chance I may break
 something if I forget to make a check for a dependency.
 
-If you're brand-new to the project and run into any blockers, please
-[open an issue](https://github.com/r-richmond/dotfiles/issues) on this repository
-and I'd love to get it fixed for you!
+If you do hit an issue, feel free to [open an issue](https://github.com/r-richmond/dotfiles/issues)
+and I'll do my best to fix it. If you want to contribute a fix, even better!
 
 ## thanks
 
@@ -101,10 +97,6 @@ stem or are inspired from Holman's original project.
   - change caps to esc-key - system preferences > keyboard > modifier keys
   - add notification to option-` - system preferences > keyboard > shortcuts > mission control
   - change keyboard ctrl-option-cmd-space - system preferences > keyboard > shortcuts > input sources
-- replace siri button with lock button on touchbar
-  - system preferences > keyboard > customize control strip
-- turnoff mission control key settings for ctrl-up/down
-  - system preferences > mission control > mission control, application windows
 - add mouse settings for buttons 4, 5, 3
   - system preferences > mission control >
 - configure alfred powerpack
@@ -142,8 +134,6 @@ script/test-symlink
 
 ### 4. After I verify the file is set up properly and the symlink is in the right place, which script do I use to symlink it?
 
-Use `script/bootstrap` to create or refresh the managed symlinks. That is the script that applies the repo's symlink naming rules to files under the topic directories.
-
 ```sh
-script/bootstrap
+script/heal-symlink
 ```

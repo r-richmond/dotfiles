@@ -5,4 +5,3 @@ if [ -d "$HOME/.docker/completions" ]; then
   compinit
   # End of Docker CLI completions
 fi
-
