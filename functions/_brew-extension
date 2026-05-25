@@ -1,0 +1,36 @@
+#compdef brew-extension
+
+# brew-extension ZSH completion function
+
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+
+local -a subcmds types categories brewfiles
+subcmds=(
+'backup:Backs up installed Homebrew items to brewfiles'
+'help:List available commands'
+'install-all:Installs Homebrew items listed in brewfiles'
+'install-missing:Installs missing Homebrew items listed in brewfiles'
+'list:Lists installed top-level Homebrew items'
+'list-missing:Lists Homebrew items saved in brewfiles but not installed'
+'list-new:Lists installed Homebrew items not saved to brewfiles'
+'remove-new:Removes installed Homebrew items not saved to brewfiles'
+'task:Installs universal brewfiles and prompts for optional categories'
+)
+types=(
+'cli:Homebrew packages and command-line tools'
+'cask:Homebrew casks'
+)
+brewfiles=("$DOTFILES"/homebrew/*_*.brewfile(N))
+categories=(${(u)${brewfiles:t:r}:s/_cli//:s/_cask//})
+
+\_arguments \
+ '1:command:->command' \
+ '--category[Limit to a brewfile category]:category:($categories)' \
+ '--type[Limit to cli packages or casks]:type:(( ${types[@]} ))' \
+ '*::argument:->argument'
+
+case $state in
+command)
+\_describe 'brew-extension' subcmds
+;;
+esac

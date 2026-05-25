@@ -41,19 +41,9 @@ fi
 
 # Turn off brew analytics
 brew analytics off
-brew bundle --file="$DOTFILES/homebrew/universal_cli.brewfile"
 
-# install universal casks on mac
-if [ "$(uname -s)" = "Darwin" ]; then
-  brew bundle --file="$DOTFILES/homebrew/universal_cask.brewfile"
-
-  echo " - Install personal casks? (y/n) "
-  read -r -n 1 answer
-  echo ''
-  if [ "$answer" != "${answer#[Yy]}" ]; then
-    echo '  Installing personal casks...' # new line
-    brew bundle --file="$DOTFILES/homebrew/personal_cask.brewfile"
-  fi
-fi
+# shellcheck disable=SC1091
+source "$DOTFILES/functions/brew-extension"
+brew-extension task
 
 exit 0
