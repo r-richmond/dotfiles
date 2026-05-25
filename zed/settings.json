@@ -7,7 +7,17 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "project_panel": {
+    "dock": "right"
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "dock": "right"
+  },
   "git_panel": {
+    "dock": "right",
     "status_style": "icon",
     "sort_by_path": true,
     "collapse_untracked_diff": false,
@@ -23,6 +33,7 @@
     }
   },
   "agent": {
+    "dock": "left",
     "default_model": {
       "effort": "high",
       "provider": "copilot_chat",
