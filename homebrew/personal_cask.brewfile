@@ -1,4 +1,4 @@
-cask '1password@7'
-cask 'discord'
-cask 'little-snitch'
-cask 'lm-studio'
+cask '1password@7' # https://1password.com/ - Password manager
+cask 'discord' # https://discord.com/ - Communication
+cask 'little-snitch' # https://www.obdev.at/products/littlesnitch/index.html - Firewall
+cask 'lm-studio' # https://lmstudio.ai/ - Local LLMs

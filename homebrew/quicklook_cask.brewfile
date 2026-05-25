@@ -1,2 +1,2 @@
-# cask 'qlmarkdown' # QL for .md
-# cask 'syntax-highlight' # Syntax highlighting
+# cask 'qlmarkdown' # hthttps://github.com/sbarex/QLMarkdown - QL for .md
+# cask 'syntax-highlight' # https://github.com/sbarex/SourceCodeSyntaxHighlight - Syntax highlighting

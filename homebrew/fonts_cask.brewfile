@@ -1,2 +1,2 @@
 # tap 'homebrew/cask-fonts'
-cask 'font-hack-nerd-font', args: { fontdir: "/Library/Fonts" }
+cask 'font-hack-nerd-font', args: { fontdir: "/Library/Fonts" } # https://github.com/ryanoasis/nerd-fonts - Hack Nerd Font
