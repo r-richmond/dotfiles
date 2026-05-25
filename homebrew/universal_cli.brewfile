@@ -19,14 +19,13 @@ brew 'node'
 brew 'nushell' # https://www.nushell.sh/ - modern shell
 brew 'ollama' # https://ollama.com/ - local LLMs
 # brew 'openjdk' # java
-brew 'protobuf'
+brew 'protobuf' # https://protobuf.dev/
 brew 'ripgrep' # https://github.com/BurntSushi/ripgrep - line-oriented search tool
 brew 'shellcheck' # https://github.com/koalaman/shellcheck
 brew 'starship' # https://starship.rs/
 brew 'trash' # https://github.com/ali-rantakari/trash - safe rm alternative
-brew 'tree'
 brew 'uv' # https://docs.astral.sh/uv/ - Python version manager
 brew 'zsh' # https://www.zsh.org/ - shell
-brew 'zsh-autosuggestions'
-brew 'zsh-completions' # installed here /usr/local/share/zsh/site-functions
-brew 'zsh-syntax-highlighting'
+brew 'zsh-autosuggestions' # https://github.com/zsh-users/zsh-autosuggestions
+brew 'zsh-completions' # https://github.com/zsh-users/zsh-completions
+brew 'zsh-syntax-highlighting' # https://github.com/zsh-users/zsh-syntax-highlighting
