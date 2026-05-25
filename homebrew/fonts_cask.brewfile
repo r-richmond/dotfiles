@@ -1,0 +1,2 @@
+# tap 'homebrew/cask-fonts'
+cask 'font-hack-nerd-font', args: { fontdir: "/Library/Fonts" }

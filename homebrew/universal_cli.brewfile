@@ -30,8 +30,5 @@ brew 'tree'
 brew 'uv'
 brew 'zsh'
 brew 'zsh-autosuggestions'
-brew 'zsh-completions'
+brew 'zsh-completions' # installed here /usr/local/share/zsh/site-functions
 brew 'zsh-syntax-highlighting'
-
-# Note: zsh completition scripts installed here
-# /usr/local/share/zsh/site-functions

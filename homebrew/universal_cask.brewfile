@@ -9,11 +9,3 @@ cask 'licecap' # Screenrecording software
 # cask 'raycast'
 cask 'rectangle' # Window manager
 cask 'visual-studio-code' # Text Editor
-
-# Not in Application Folder
-# cask 'qlmarkdown' # QL for .md
-# cask 'syntax-highlight' # Syntax highlighting
-
-# Fonts
-# tap 'homebrew/cask-fonts'
-cask 'font-hack-nerd-font', args: { fontdir: "/Library/Fonts" }
