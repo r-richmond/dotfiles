@@ -1,0 +1,6 @@
+# target_name|repo_url|ref|source_path
+# Local skills can live directly under skills/symlink.agents+skills.
+# Only the targets listed here are refreshed by skills/install.sh.
+grill-with-docs|https://github.com/mattpocock/skills.git|main|skills/engineering/grill-with-docs
+diagnose|https://github.com/mattpocock/skills.git|main|skills/engineering/diagnose
+grill-me|https://github.com/mattpocock/skills.git|main|skills/productivity/grill-me

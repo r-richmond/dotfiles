@@ -12,7 +12,8 @@ Everything's built around topic areas. If you're adding a new area to your
 forked dotfiles — say, "Java" — you can simply add a `java` directory and put
 files in there. Anything with an extension of `.zsh` will get automatically
 included into your shell. Anything with a prefix of `symlink` will get
-symlinked without the prefix into `$HOME` when you run `script/bootstrap`.
+symlinked without the prefix into `$HOME` when you run `script/bootstrap`,
+whether the source is a file or a directory.
 This differs from Holman's layout so the file extension stays unchanged, which
 helps with syntax highlighting. A `+` in the filename maps to a `/` in the
 destination path under `$HOME`.
@@ -37,9 +38,9 @@ There's a few special files in the hierarchy.
 - **topic/completion.zsh**: Any file named `completion.zsh` is loaded
   last and is expected to setup autocomplete.
 - **topic/install.sh**: Any file named `install.sh` is executed when you run `script/install`. To avoid being loaded automatically, its extension is `.sh`, not `.zsh`.
-- **topic/symlink\***: Any file starting with `symlink` gets symlinked into
-  your `$HOME`. This is so you can keep all of those versioned in your dotfiles
-  but still keep those autoloaded files in your home directory.
+- **topic/symlink\***: Any file or directory starting with `symlink` gets
+  symlinked into your `$HOME`. This is so you can keep all of those versioned in
+  your dotfiles but still keep those autoloaded files in your home directory.
   - To further nest symlinks into subdirectories under `$HOME`, use `+` signs
     to signify additional directory delimiters. So for example, the file
     `topic/symlink.folder_name+file_name`
@@ -52,6 +53,7 @@ This repo uses the source filename to determine the destination path.
 - `zsh/symlink.zshrc` becomes `~/.zshrc`
 - `vscode/symlink.vscode+argv.json` becomes `~/.vscode/argv.json`
 - `vscode/symlinkLibrary+Application Support+Code+User+settings.json` becomes `~/Library/Application Support/Code/User/settings.json`
+- `skills/symlink.agents+skills` becomes `~/.agents/skills`
 
 Run `script/bootstrap` to create the managed symlinks, and run
 `script/test-symlink` to verify that they still point to the expected files.
@@ -127,7 +129,7 @@ source ~/.zshrc
 
 ### 3. I added a new file that should be symlinked. How do I ensure it is named correctly and where it will go?
 
-Name the file with a `symlink` prefix and treat `+` as a directory separator under `$HOME`. For example, `vscode/symlink.vscode+argv.json` maps to `~/.vscode/argv.json`, and `script/test-symlink` will verify that the destination is what you expect.
+Name the file or directory with a `symlink` prefix and treat `+` as a directory separator under `$HOME`. For example, `vscode/symlink.vscode+argv.json` maps to `~/.vscode/argv.json`, and `script/test-symlink` will verify that the destination is what you expect.
 
 ```sh
 script/test-symlink

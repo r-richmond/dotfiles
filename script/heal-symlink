@@ -16,7 +16,7 @@ source "$DOTFILES/script/lib/symlink"
 replace_with_link() {
   local src=$1 dst=$2
 
-  rm -f "$dst"
+  rm -rf "$dst"
   link_symlink "$src" "$dst"
   success "linked $src to $dst"
 }
@@ -50,6 +50,55 @@ print_file() {
 
 handle_link_issue() {
   local src=$1 dst=$2 action
+
+  if [ -d "$src" ]; then
+    if [ -L "$dst" ] && [ -e "$dst" ]; then
+      success "already linked $dst"
+      return 0
+    fi
+
+    if [ -L "$dst" ] && ! [ -e "$dst" ]; then
+      info "destination is a broken symlink; replacing it"
+      replace_with_link "$src" "$dst"
+      return 0
+    fi
+
+    if [ ! -e "$dst" ]; then
+      link_symlink "$src" "$dst"
+      success "linked $src to $dst"
+      return 0
+    fi
+
+    while true; do
+      user "Managed directory destination differs: $dst ($(basename "$src")), what do you want to do?\n\
+            [s]kip, [r]eplace with symlink, [m]ove to backup then symlink?"
+
+      if ! read -r -n 1 -u 3 action; then
+        echo ''
+        fail "unable to read a response for $dst"
+      fi
+
+      echo ''
+
+      case "$action" in
+      s)
+        success "skipped $src"
+        return 0
+        ;;
+      r)
+        replace_with_link "$src" "$dst"
+        return 0
+        ;;
+      m)
+        move_to_backup_and_link "$src" "$dst"
+        return 0
+        ;;
+      *)
+        user "invalid choice: $action"
+        ;;
+      esac
+    done
+  fi
 
   if [ -L "$dst" ]; then
     if [ -e "$dst" ]; then

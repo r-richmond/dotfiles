@@ -43,7 +43,7 @@ resolve_link_target() {
 }
 
 find_symlink_sources() {
-  find "$DOTFILES" -maxdepth 2 -type f -name 'symlink*' ! -path '*/.git/*' -print0
+  find "$DOTFILES" -maxdepth 2 \( -type f -o -type d \) -name 'symlink*' ! -path '*/.git/*' -print0
 }
 
 link_symlink() {
