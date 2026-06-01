@@ -124,6 +124,7 @@ link_file() {
   local absorb=
   local skip=
   local action=
+  local allow_absorb=false
 
   # check if target exists and is symlink
   if [ -e "$dst" ] || [ -L "$dst" ]; then
@@ -146,9 +147,18 @@ link_file() {
         skip=true
 
       else
+        if [ -f "$src" ] && [ -f "$dst" ]; then
+          allow_absorb=true
+        fi
+
         while true; do
-          user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+          if [ "$allow_absorb" = "true" ]; then
+            user "Path already exists: $dst ($(basename "$src")), what do you want to do?\n\
           [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [a]bsorb, [A]bsorb all, [b]ackup, [B]ackup all?"
+          else
+            user "Path already exists: $dst ($(basename "$src")), what do you want to do?\n\
+          [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+          fi
 
           if ! read -r -n 1 action; then
             echo ''
@@ -175,12 +185,20 @@ link_file() {
             break
             ;;
           a)
-            absorb=true
-            break
+            if [ "$allow_absorb" = "true" ]; then
+              absorb=true
+              break
+            else
+              user "invalid choice: $action"
+            fi
             ;;
           A)
-            absorb_all=true
-            break
+            if [ "$allow_absorb" = "true" ]; then
+              absorb_all=true
+              break
+            else
+              user "invalid choice: $action"
+            fi
             ;;
           s)
             skip=true
@@ -216,6 +234,10 @@ link_file() {
 
     if [ "$absorb" = "true" ]; then
       local absorbed_src
+
+      if ! [ -f "$src" ] || ! [ -f "$dst" ]; then
+        fail "absorb is only supported for regular files: $dst"
+      fi
 
       absorbed_src=$(mktemp "${src}.XXXXXX")
       cat "$dst" >"$absorbed_src"
