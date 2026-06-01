@@ -117,4 +117,5 @@
     "*.md": "vscode.markdown.preview.editor",
   },
   "chat.tools.compressOutput.enabled": true,
+  "remote.autoForwardPortsSource": "hybrid",
 }
