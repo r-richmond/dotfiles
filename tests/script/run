@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)
+
+for test_file in "$ROOT"/tests/script/*_test.bash; do
+  [ -e "$test_file" ] || continue
+  "$test_file"
+done
