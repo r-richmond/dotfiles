@@ -18,7 +18,23 @@ run_exit_code=0
 source "$ROOT/script/lib/symlink"
 
 cleanup() {
-  rm -rf "$TMP_ROOT"
+  case "$TMP_ROOT" in
+    "$ROOT/tests/tmp" | "$ROOT/tests/tmp/" | "$ROOT/tests/tmp"/*) ;;
+    '')
+      printf 'Refusing to remove TMP_ROOT=%s\n' "$TMP_ROOT" >&2
+      return 1
+      ;;
+    '/')
+      printf 'Refusing to remove TMP_ROOT=%s\n' "$TMP_ROOT" >&2
+      return 1
+      ;;
+    *)
+      printf 'Refusing to remove TMP_ROOT outside %s: %s\n' "$ROOT/tests/tmp" "$TMP_ROOT" >&2
+      return 1
+      ;;
+  esac
+
+  rm -rf -- "$TMP_ROOT"
 }
 
 fail_test() {
@@ -62,7 +78,7 @@ setup_case() {
   fake_dotfiles="$case_root/dotfiles"
   fake_home="$case_root/home"
 
-  rm -rf "$case_root"
+  rm -rf -- "$case_root"
   mkdir -p "$fake_dotfiles/topic" "$fake_home"
   ln -s "$ROOT/script" "$fake_dotfiles/script"
 }

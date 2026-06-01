@@ -3,7 +3,6 @@ macos/defaults-macos-personal.sh
 nushell/history.txt
 backup-moved/
 tests/tmp/
-# added by github-copilot
 github-copilot
 k9s/screen-dumps
 gh/hosts.yml
