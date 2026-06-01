@@ -188,12 +188,16 @@ link_file() {
             if [ "$allow_absorb" = "true" ]; then
               absorb=true
               break
+            else
+              user "invalid choice: $action"
             fi
             ;;
           A)
             if [ "$allow_absorb" = "true" ]; then
               absorb_all=true
               break
+            else
+              user "invalid choice: $action"
             fi
             ;;
           s)
