@@ -118,4 +118,5 @@
   },
   "chat.tools.compressOutput.enabled": true,
   "remote.autoForwardPortsSource": "hybrid",
+  "pythonOverrideMark.display.gutterIcons": true,
 }
