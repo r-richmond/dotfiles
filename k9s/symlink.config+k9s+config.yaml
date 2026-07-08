@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/derailed/k9s/master/internal/config/json/schemas/k9s.json
 k9s:
   liveViewAutoRefresh: false
-  screenDumpDir: $K9S_CONFIG_DIR/screen-dumps
   refreshRate: 2
   maxConnRetry: 5
   readOnly: false
