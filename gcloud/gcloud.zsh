@@ -9,4 +9,4 @@ for file in "${ThingsToSource[@]}"; do
   fi
 done
 
-export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.13
+export CLOUDSDK_PYTHON=/opt/homebrew/bin/python3.14
