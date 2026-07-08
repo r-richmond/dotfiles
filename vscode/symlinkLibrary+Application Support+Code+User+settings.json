@@ -118,5 +118,14 @@
   },
   "chat.tools.compressOutput.enabled": true,
   "remote.autoForwardPortsSource": "hybrid",
-  "pythonOverrideMark.display.gutterIcons": true
+  "pythonOverrideMark.display.gutterIcons": true,
+  // Added by default
+  "yaml.disableSchemaDetection": [
+    "**/.github/workflows/*.yml",
+    "**/.github/workflows/*.yaml",
+    "**/.gitea/workflows/*.yml",
+    "**/.gitea/workflows/*.yaml",
+    "**/.forgejo/workflows/*.yml",
+    "**/.forgejo/workflows/*.yaml"
+  ],
 }
