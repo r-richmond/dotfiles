@@ -117,6 +117,8 @@
     "*.md": "vscode.markdown.preview.editor",
   },
   "chat.tools.compressOutput.enabled": true,
+  "remote.autoForwardPortsSource": "hybrid",
+  "pythonOverrideMark.display.gutterIcons": true,
   // Added by default
   "yaml.disableSchemaDetection": [
     "**/.github/workflows/*.yml",
@@ -124,6 +126,7 @@
     "**/.gitea/workflows/*.yml",
     "**/.gitea/workflows/*.yaml",
     "**/.forgejo/workflows/*.yml",
-    "**/.forgejo/workflows/*.yaml"
+    "**/.forgejo/workflows/*.yaml",
   ],
+  "explorer.compactFolders": false,
 }

@@ -10,13 +10,25 @@
     "context": "Workspace",
     "bindings": {
       // "shift shift": "file_finder::Toggle"
-      "cmd-4": "terminal_panel::ToggleFocus"
     }
   },
   {
     "context": "Editor",
     "bindings": {
       // "j k": ["workspace::SendKeystrokes", "escape"]
+      // "cmd 4": ["workspace::SendKeystrokes", "Terminal Panel"]
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "cmd-4": null
+    }
+  },
+  {
+    "context": "Workspace ||  Editor",
+    "bindings": {
+      "cmd-4": "terminal_panel::Toggle"
     }
   }
 ]

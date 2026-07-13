@@ -1,9 +1,12 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
 # Do not insert a blank line between shell prompts.
 add_newline = false
 # Timeout for commands executed by starship (in milliseconds).
 command_timeout = 800
 
-format = '$shell$directory$git_branch$git_status$git_metrics$python$bun$golang$time${env_var.STARSHIP_COMMAND_DURATION}$status$line_break$character'
+format = '$shell$directory$git_branch$git_state$git_status$git_metrics$python$bun$time${env_var.STARSHIP_COMMAND_DURATION}$status$line_break$character'
 right_format = '$gcloud$aws$azure$localip'
 
 [shell]
@@ -17,7 +20,7 @@ repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($re
 style = 'bold #4169e1'
 repo_root_style = 'bold #4169e1'
 truncation_length = 4
-truncate_to_repo = false
+truncate_to_repo = true
 
 [git_branch]
 format = ' [on](white) [$symbol$branch(:$remote_branch)]($style) '
@@ -82,7 +85,7 @@ format = '[using](white) [$symbol$version]($style) '
 style = 'bold red'
 
 [golang]
-format = '[using](white) [$symbol($version )($mod_version)]($style) '
+format = '[using](white) [$symbol($version )($mod_version)]($style)'
 style = 'bold cyan'
 
 [env_var.STARSHIP_COMMAND_DURATION]
@@ -95,16 +98,17 @@ format = '[ status $status]($style) '
 style = 'bold red'
 
 [gcloud]
-format = '([$symbol$project]($style) ) '
+format = '([$symbol$project]($style) )'
 style = 'bold blue'
-symbol = '☁ '
+symbol = '☁️ '
+disabled = false
 
 [aws]
 format = '[$symbol($profile )(\($region\))]($style) '
 style = 'bold yellow'
 
 [azure]
-disabled = false
+disabled = true
 format = '[$symbol($subscription)]($style) '
 style = 'blue bold'
 

@@ -16,6 +16,7 @@ hashicorp.terraform
 jasonnutter.vscode-codeowners
 k--kato.intellij-idea-keybindings
 ldez.ignore-files
+maxorr.python-override-mark
 mechatroner.rainbow-csv
 mikestead.dotenv
 ms-azuretools.vscode-containers
@@ -37,5 +38,4 @@ samuelcolvin.jinjahtml
 svelte.svelte-vscode
 tamasfe.even-better-toml
 timonwong.shellcheck
-vscode-icons-team.vscode-icons
 wholroyd.jinja
