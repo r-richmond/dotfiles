@@ -16,6 +16,7 @@ hashicorp.terraform
 jasonnutter.vscode-codeowners
 k--kato.intellij-idea-keybindings
 ldez.ignore-files
+llvm-vs-code-extensions.lldb-dap
 maxorr.python-override-mark
 mechatroner.rainbow-csv
 mikestead.dotenv
@@ -36,6 +37,8 @@ pkief.material-icon-theme
 redhat.vscode-yaml
 samuelcolvin.jinjahtml
 svelte.svelte-vscode
+swiftlang.swift-vscode
 tamasfe.even-better-toml
+thenuprojectcontributors.vscode-nushell-lang
 timonwong.shellcheck
 wholroyd.jinja
