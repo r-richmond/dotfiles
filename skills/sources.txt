@@ -1,6 +1,18 @@
 # target_name|repo_url|ref|source_path
 # Local skills can live directly under skills/symlink.agents+skills.
 # Only the targets listed here are refreshed by skills/install.sh.
+# grill-with-docs delegates to grilling and domain-modeling; to-spec and tdd use codebase-design.
 grill-with-docs|https://github.com/mattpocock/skills.git|main|skills/engineering/grill-with-docs
-diagnose|https://github.com/mattpocock/skills.git|main|skills/engineering/diagnose
+grilling|https://github.com/mattpocock/skills.git|main|skills/productivity/grilling
+domain-modeling|https://github.com/mattpocock/skills.git|main|skills/engineering/domain-modeling
+codebase-design|https://github.com/mattpocock/skills.git|main|skills/engineering/codebase-design
 grill-me|https://github.com/mattpocock/skills.git|main|skills/productivity/grill-me
+to-spec|https://github.com/mattpocock/skills.git|main|skills/engineering/to-spec
+to-tickets|https://github.com/mattpocock/skills.git|main|skills/engineering/to-tickets
+wayfinder|https://github.com/mattpocock/skills.git|main|skills/engineering/wayfinder
+prototype|https://github.com/mattpocock/skills.git|main|skills/engineering/prototype
+research|https://github.com/mattpocock/skills.git|main|skills/engineering/research
+implement|https://github.com/mattpocock/skills.git|main|skills/engineering/implement
+tdd|https://github.com/mattpocock/skills.git|main|skills/engineering/tdd
+code-review|https://github.com/mattpocock/skills.git|main|skills/engineering/code-review
+diagnosing-bugs|https://github.com/mattpocock/skills.git|main|skills/engineering/diagnosing-bugs
