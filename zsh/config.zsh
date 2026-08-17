@@ -17,6 +17,8 @@ setopt NO_HUP
 setopt NO_LIST_BEEP
 
 HISTFILE=~/.zsh_history
+# Keep nested shells from inheriting this and overwriting Zsh history.
+typeset +x HISTFILE
 HISTSIZE=5000000
 SAVEHIST=5000000
 
