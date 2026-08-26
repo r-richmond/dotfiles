@@ -20,7 +20,9 @@ SOURCES_PATH = SKILLS_DIR / "sources.txt"
 SKILL_ROOT = SKILLS_DIR / "symlink.agents+skills"
 SECTION_START = "<!-- BEGIN MANAGED SKILLS -->"
 SECTION_END = "<!-- END MANAGED SKILLS -->"
-REFERENCE_PATTERN = re.compile(r"(?<![\w-])/([a-z0-9][a-z0-9-]*)\b")
+SLASH_REFERENCE_PATTERN = re.compile(r"(?<![\w-])/([a-z0-9][a-z0-9-]*)\b")
+SKILL_TOOL_CLAUSE_PATTERN = re.compile(r"\bSkill tool\b[^.\n]*", re.IGNORECASE)
+QUOTED_REFERENCE_PATTERN = re.compile(r'["\']([a-z0-9][a-z0-9-]*)["\']')
 
 
 class Skill(BaseModel):
@@ -103,7 +105,9 @@ def read_skill(name: str, known_names: list[str], source_url: str | None) -> Ski
         raise ValueError(f"missing frontmatter in {path}")
 
     _, frontmatter, body = content.split("---\n", 2)
-    references = set(REFERENCE_PATTERN.findall(body))
+    references = set(SLASH_REFERENCE_PATTERN.findall(body))
+    for clause in SKILL_TOOL_CLAUSE_PATTERN.findall(body):
+        references.update(QUOTED_REFERENCE_PATTERN.findall(clause))
     dependencies = tuple(
         dependency
         for dependency in known_names
