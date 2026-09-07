@@ -96,16 +96,33 @@ stem or are inspired from Holman's original project.
 
 ## things left to do
 
-- updated keyboard shortcuts
-  - change caps to esc-key - system preferences > keyboard > modifier keys
-  - add notification to option-` - system preferences > keyboard > shortcuts > mission control
-  - change keyboard ctrl-option-cmd-space - system preferences > keyboard > shortcuts > input sources
-- add mouse settings for buttons 4, 5, 3
-  - system preferences > mission control >
+- change keyboard ctrl-option-cmd-space - system preferences > keyboard > shortcuts > input sources
 - configure alfred powerpack
   - setup powerpack & link to sync folder & setup theme
-- Figure out how to safe misc system preferences
-  - keyboard shortcuts defined via macos
+
+## macOS keyboard and mouse shortcuts
+
+[macos/defaults-macos-keyboard.sh](macos/defaults-macos-keyboard.sh) stores:
+
+- Caps Lock to Escape for all connected keyboards and previously saved keyboard
+  IDs. IDs are discovered automatically; other modifier swaps are preserved.
+  These per-host preferences survive restarts, unlike transient `hidutil`
+  remaps. Rerun the script after connecting a new, previously unknown keyboard.
+- Command-Option-backtick to show or hide Notification Center (symbolic hotkey `163`).
+- Control + mouse button 4 for Mission Control (`38`), Control + mouse button 5
+  for Application Windows (`39`), and Control + mouse button 3 for Show Desktop
+  (`42`), including their Shift variants (`40`, `41`, `43`). These match the
+  saved settings, including Control; button parameters are bitmasks `8`, `16`, `4`.
+
+Run `bash macos/defaults-macos-keyboard.sh` to apply these settings, then log out
+and back in so macOS reloads them. The macOS installer also runs this script.
+The script stores preferences; it does not force a logout or restart apps.
+It requires `jq` and a macOS version whose `hidutil list` supports `--ndjson`.
+
+Run `bash tests/macos/keyboard_test.bash` on macOS to check keyboard discovery,
+modifier-map preservation, and saved keyboard and mouse shortcut values. Tests
+require `jq` and redirect preference writes to temporary plists without changing
+live settings.
 
 ## FAQ
 
