@@ -9,6 +9,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -84,8 +85,12 @@ def frontmatter_value(frontmatter: str, key: str) -> str:
         raise ValueError(f"missing {key!r} in skill frontmatter")
 
     value = match.group(1).strip()
-    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-        return value[1:-1]
+    # Decode quoted scalars so YAML escapes do not leak into the generated README.
+    if len(value) >= 2 and value[0] == value[-1]:
+        if value[0] == '"':
+            return json.loads(value)
+        if value[0] == "'":
+            return value[1:-1].replace("''", "'")
     return value
 
 
