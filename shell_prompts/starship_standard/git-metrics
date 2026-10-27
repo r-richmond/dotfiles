@@ -1,0 +1,50 @@
+#!/bin/bash
+set -eu
+
+case "${1:-}" in
+  staged) set -- --cached; status_column=0 ;;
+  unstaged) set --; status_column=1 ;;
+  *) exit 2 ;;
+esac
+
+added=0
+modified=0
+deleted=0
+renamed=0
+typechanged=0
+untracked=0
+
+while IFS= read -r -d '' entry; do
+  file_status=${entry:0:2}
+  case "$file_status" in
+    *R*|*C*) IFS= read -r -d '' original_path ;;
+  esac
+  case "$file_status" in
+    DD|AU|UD|UA|DU|AA|UU) continue ;;
+    '??')
+      if [ "$status_column" -eq 1 ]; then
+        untracked=$((untracked + 1))
+      fi
+      continue
+      ;;
+  esac
+  case "${file_status:status_column:1}" in
+    A|C) added=$((added + 1)) ;;
+    M) modified=$((modified + 1)) ;;
+    D) deleted=$((deleted + 1)) ;;
+    R) renamed=$((renamed + 1)) ;;
+    T) typechanged=$((typechanged + 1)) ;;
+  esac
+done < <(git status --porcelain=v1 -z --untracked-files=all)
+
+[ "$added" -eq 0 ] || printf '\033[1;32m+%d \033[0m' "$added"
+[ "$modified" -eq 0 ] || printf '\033[33m!%d \033[0m' "$modified"
+[ "$deleted" -eq 0 ] || printf '\033[1;31m-%d \033[0m' "$deleted"
+[ "$renamed" -eq 0 ] || printf '\033[36mr%d \033[0m' "$renamed"
+[ "$typechanged" -eq 0 ] || printf '\033[33mT%d \033[0m' "$typechanged"
+[ "$untracked" -eq 0 ] || printf '\033[36m?%d \033[0m' "$untracked"
+
+line_metrics=$(git diff "$@" --numstat | awk '$1 ~ /^[0-9]+$/ && $2 ~ /^[0-9]+$/ { added += $1; deleted += $2 } END { if (added) printf "\033[1;32m+%d\033[0m ", added; if (deleted) printf "\033[1;31m-%d\033[0m ", deleted }')
+if [ -n "$line_metrics" ]; then
+  printf '\033[1;37mL \033[0m%s' "$line_metrics"
+fi

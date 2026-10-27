@@ -111,6 +111,14 @@
       "approve": true,
       "matchCommandLine": true,
     },
+    "/^uv run poe mypy$/": {
+      "approve": true,
+      "matchCommandLine": true,
+    },
+    "/^uv run poe pyrefly$/": {
+      "approve": true,
+      "matchCommandLine": true,
+    },
   },
   "chat.experimental.incrementalRendering.enabled": true,
   "workbench.diffEditorAssociations": {
@@ -129,4 +137,7 @@
     "**/.forgejo/workflows/*.yaml",
   ],
   "explorer.compactFolders": false,
+  "chat.experimental.incrementalRendering.animationStyle": "none",
+  "chat.experimental.incrementalRendering.buffering": "paragraph",
+  "chat.exploreAgent.defaultModel": "GPT-6 Luna (copilot)",
 }
