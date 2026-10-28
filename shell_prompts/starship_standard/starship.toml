@@ -45,7 +45,7 @@ diverged = '[↑$ahead_count↓$behind_count](red) ' # Both icons with counts
 disabled = true
 
 [custom.git_staged_metrics]
-command = 'bash "$HOME/.dotfiles/shell_prompts/starship_standard/git-metrics" staged'
+command = 'bash "${STARSHIP_CONFIG%/*}/git-metrics" staged'
 format = '([S\[F ](bold white)$output[\] ](bold white))'
 require_repo = true
 shell = ['sh']
@@ -53,7 +53,7 @@ unsafe_no_escape = true
 when = true
 
 [custom.git_unstaged_metrics]
-command = 'bash "$HOME/.dotfiles/shell_prompts/starship_standard/git-metrics" unstaged'
+command = 'bash "${STARSHIP_CONFIG%/*}/git-metrics" unstaged'
 format = '([U\[F ](bold white)$output[\] ](bold white))'
 require_repo = true
 shell = ['sh']
