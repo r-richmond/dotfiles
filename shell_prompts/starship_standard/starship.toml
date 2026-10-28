@@ -6,7 +6,7 @@ add_newline = false
 # Timeout for commands executed by starship (in milliseconds).
 command_timeout = 800
 
-format = '$shell$directory$git_branch$git_state$git_status$git_metrics$python$bun$time${env_var.STARSHIP_COMMAND_DURATION}$status$line_break$character'
+format = '$shell$directory$git_branch$git_state$git_status${custom.git_staged_metrics}${custom.git_unstaged_metrics}$python$bun$time${env_var.STARSHIP_COMMAND_DURATION}$status$line_break$character'
 right_format = '$gcloud$aws$azure$localip'
 
 [shell]
@@ -28,16 +28,10 @@ style = 'bold #32cd32'
 symbol = ''                                                       # Branch symbol
 
 [git_status]
-# The format string ensures all requested states and stash counts are displayed
-format = '[$ahead_behind](bold cyan)[($stashed )]($style)([\[ $staged$modified$conflicted$deleted$untracked\]]($style) )'
+format = '[$ahead_behind](bold cyan)[($stashed )]($style)($conflicted )'
 style = "bold white"
 
-# File States Configuration
-staged = '[+$count ](blue)'      # Plus with file count
-modified = '[!$count ](yellow)'  # Modified with file count
-conflicted = '⚔️[¡$count ](red)' # Sword with file count
-deleted = '[-$count ](red)'      # Trash with file count
-untracked = '[?$count ](cyan)'   # Question mark with file count
+conflicted = '⚔️[¡$count ](red)'            # Sword with file count
 
 # Stashes Configuration
 stashed = '[*$count](purple)' # Stash icon with total count
@@ -48,10 +42,23 @@ behind = '[↓$count](orange) '                    # Down arrow with behind coun
 diverged = '[↑$ahead_count↓$behind_count](red) ' # Both icons with counts
 
 [git_metrics]
-added_style = 'bold green'
-deleted_style = 'bold red'
-disabled = false
-format = '(L([+$added]($added_style))([-$deleted]($deleted_style)) )'
+disabled = true
+
+[custom.git_staged_metrics]
+command = 'bash "${STARSHIP_CONFIG%/*}/git-metrics" staged'
+format = '([S\[F ](bold white)$output[\] ](bold white))'
+require_repo = true
+shell = ['sh']
+unsafe_no_escape = true
+when = true
+
+[custom.git_unstaged_metrics]
+command = 'bash "${STARSHIP_CONFIG%/*}/git-metrics" unstaged'
+format = '([U\[F ](bold white)$output[\] ](bold white))'
+require_repo = true
+shell = ['sh']
+unsafe_no_escape = true
+when = true
 
 # [kubernetes]
 # disabled = false
